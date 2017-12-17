@@ -3,7 +3,7 @@
     "displayName": "Nand2Tetris Language",
     "description": "Language support for Nand2Tetris.",
     "version": "0.0.1",
-    "icon": "/images/icon.png",
+    "icon": "images/icon.png",
     "publisher": "leafvmaple",
     "engines": {
         "vscode": "^1.19.0"
