@@ -1,24 +1,52 @@
 {
-	"$schema": "https://raw.githubusercontent.com/martinring/tmlanguage/master/tmlanguage.json",
-	"name": "HDL",
-	"patterns": [
-		{
-			"begin": "\\/\\*",
-			"comment": "Block comment",
-			"end": "\\*\\/",
-			"name": "comment.block.hdl"
-		},
-		{
-			"begin": "\\/\\/",
-			"comment": "Line comment",
-			"end": "\n",
-			"name": "comment.line.hdl"
-		},
-		{
-			"comment": "keywords",
-			"match": "IN|OUT|PARTS|BUILTIN",
-			"name": "keyword.hdl"
-		}
-	],
-	"scopeName": "source.hdl"
+    "fileTypes": [
+        "hdl"
+    ],
+    "name": "HDL",
+    "patterns": [
+        {
+            "comment": "Block comment",
+            "begin": "\\/\\*",
+            "end": "\\*\\/",
+            "name": "comment.block.hdl"
+        },
+        {
+            "comment": "Line comment",
+            "begin": "\\/\\/",
+            "end": "\\n",
+            "name": "comment.line.hdl"
+        },
+        {
+            "comment": "keywords",
+            "name": "keyword.hdl",
+            "match": "IN|OUT|PARTS|BUILTIN"
+        },
+        {
+            "comment": "true, false",
+            "name": "constant.language.hdl",
+            "match": "true|false"
+        },
+        {
+            "comment": "bus index",
+            "match": "\\[([\\d]+)\\]"
+        },
+        {
+            "comment": ".. in bus slicing",
+            "match": "\\[(\\d+\\.{2}\\d+)\\]"
+        },
+        {
+            "comment": "chip name",
+            "name": "storage.type.hdl",
+            "match": "CHIP"
+        },
+        {
+            "comment": "inner chip",
+            "match": "([\\w\\d\\_]+)\\s*\\("
+        },
+        {
+            "comment": "inner chip inputs and outputs",
+            "match": "([\\w\\d\\_]+)="
+        }
+    ],
+    "scopeName": "source.hdl"
 }
