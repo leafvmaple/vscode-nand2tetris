@@ -1,0 +1,26 @@
+{
+    "name": "nand2tetris",
+    "displayName": "Nand2Tetris Language",
+    "description": "Language support for Nand2Tetris.",
+    "version": "0.0.1",
+    "publisher": "leafvmaple",
+    "engines": {
+        "vscode": "^1.19.0"
+    },
+    "categories": [
+        "Languages"
+    ],
+    "contributes": {
+        "languages": [{
+            "id": "hdl",
+            "aliases": ["HDL", "hdl"],
+            "extensions": [".hdl"],
+            "configuration": "./language-configuration.json"
+        }],
+        "grammars": [{
+            "language": "hdl",
+            "scopeName": "source.hdl",
+            "path": "./syntaxes/hdl.tmLanguage.json"
+        }]
+    }
+}

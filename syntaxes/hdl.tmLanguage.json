@@ -1,0 +1,24 @@
+{
+	"$schema": "https://raw.githubusercontent.com/martinring/tmlanguage/master/tmlanguage.json",
+	"name": "HDL",
+	"patterns": [
+		{
+			"begin": "\\/\\*",
+			"comment": "Block comment",
+			"end": "\\*\\/",
+			"name": "comment.block.hdl"
+		},
+		{
+			"begin": "\\/\\/",
+			"comment": "Line comment",
+			"end": "\n",
+			"name": "comment.line.hdl"
+		},
+		{
+			"comment": "keywords",
+			"match": "IN|OUT|PARTS|BUILTIN",
+			"name": "keyword.hdl"
+		}
+	],
+	"scopeName": "source.hdl"
+}
