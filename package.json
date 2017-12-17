@@ -2,7 +2,7 @@
     "name": "nand2tetris",
     "displayName": "Nand2Tetris Language",
     "description": "Language support for Nand2Tetris.",
-    "version": "0.0.2",
+    "version": "0.1.0",
     "icon": "images/icon.png",
     "publisher": "leafvmaple",
     "engines": {
@@ -19,9 +19,19 @@
         "commands": [
             {
                 "command": "nand2tetris.run",
-                "title": "Run HDL"
+                "title": "Nand2Tetris: Run Code",
+                "icon": "./images/icon.png" 
             }
         ],
+        "menus": {
+            "editor/title": [
+                {
+                    "when": "resourceLangId == hdl",
+                    "command": "nand2tetris.run",
+                    "group": "navigation"
+                }
+            ]
+        },
         "languages": [
             {
                 "id": "hdl",
