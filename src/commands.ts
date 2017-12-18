@@ -6,21 +6,36 @@ export class Commands implements vscode.Disposable {
     private _EXTENSION_NAME = "leafvmaple.nand2tetris"
     private _outputChannel: vscode.OutputChannel
     private _terminal: vscode.Terminal
-    private _extensionDir: String
-    private _cmdString: String
+    private _platform: String
+    private _extensionPath: String
+    private _n2tComands: String
 
     constructor() {
-        const extension = vscode.extensions.getExtension(this._EXTENSION_NAME)
-        this._outputChannel = vscode.window.createOutputChannel("Nand2Tetris")
-        this._terminal = null
-        this._extensionDir = extension.extensionPath
-        this._cmdString = "java -classpath \"${CLASSPATH}:"
-                        + this._extensionDir + "/bin/classes:"
-                        + this._extensionDir + "/bin/lib/Hack.jar:"
-                        + this._extensionDir + "/bin/lib/HackGUI.jar:"
-                        + this._extensionDir + "/bin/lib/Simulators.jar:"
-                        + this._extensionDir + "/bin/lib/SimulatorsGUI.jar:"
-                        + this._extensionDir + "/bin/lib/Compilers.jar\" HardwareSimulatorMain "
+        let symbol;
+
+        this._platform = process.platform;
+        switch (this._platform) {
+        case "win32": 
+            symbol = ";";
+            break;
+        case "linux":
+            symbol = ":";
+            break;
+        case "darwin":
+            symbol = ":";
+            break;
+        }
+        
+        this._outputChannel = vscode.window.createOutputChannel("Nand2Tetris");
+        this._terminal = null;
+        this._extensionPath = vscode.extensions.getExtension(this._EXTENSION_NAME).extensionPath;
+        this._n2tComands = "java -classpath \"${CLASSPATH}" + symbol
+                        + this._extensionPath + "/bin/classes" + symbol
+                        + this._extensionPath + "/bin/lib/Hack.jar" + symbol
+                        + this._extensionPath + "/bin/lib/HackGUI.jar" + symbol
+                        + this._extensionPath + "/bin/lib/Simulators.jar" + symbol
+                        + this._extensionPath + "/bin/lib/SimulatorsGUI.jar" + symbol
+                        + this._extensionPath + "/bin/lib/Compilers.jar\" HardwareSimulatorMain "
     }
 
     public executeCommandInTerminal(fileName: string): void {
@@ -29,9 +44,9 @@ export class Commands implements vscode.Disposable {
         }
         this._terminal.show(true)
         //this._outputChannel.show(true)
-        //vscode.window.showInformationMessage(command)
-        this._terminal.sendText(`cd "${this._extensionDir}"`);
-        this._terminal.sendText(this._cmdString + fileName);
+        //vscode.window.showInformationMessage(this._n2tComands + fileName);
+        this._terminal.sendText(`cd "${this._extensionPath}"`);
+        this._terminal.sendText(this._n2tComands + fileName);
         this._outputChannel.appendLine("[Running] " + basename(fileName, ".tst") + ".hdl");
     }
 
