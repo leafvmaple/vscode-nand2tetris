@@ -31,8 +31,8 @@ export class Commands implements vscode.Disposable {
         //this._outputChannel.show(true)
         //vscode.window.showInformationMessage(command)
         this._terminal.sendText(`cd "${this._extensionDir}"`);
-        this._terminal.sendText(this._cmdString + fileName)
-        this._outputChannel.appendLine("[Running] " + basename(fileName, ".tst") + ".hdl")
+        this._terminal.sendText(this._cmdString + fileName);
+        this._outputChannel.appendLine("[Running] " + basename(fileName, ".tst") + ".hdl");
     }
 
     public dispose() {
