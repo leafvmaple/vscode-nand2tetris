@@ -1,5 +1,9 @@
 # Nand2Tetris Change Log
 
+## [0.2.0] 2017-12-19
+
+* Add `Snippets` for `HDL` Language.
+
 ## [0.1.1] 2017-12-18
 
 * Fixed the Run Code bug in windows.

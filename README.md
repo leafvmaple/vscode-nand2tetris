@@ -2,7 +2,11 @@
 
 The Visual Studio Code extenstion for Nand2Tetris Language support.
 
-##Release Notes
+## Release Notes
+
+### Version 0.2.0
+
+Add `Snippets` for `HDL` Language.
 
 ### Version 0.1.1
 

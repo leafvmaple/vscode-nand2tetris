@@ -1,0 +1,114 @@
+{
+    "Chip Nand" : {
+        "prefix": "Nand",
+        "body": [
+            "Nand(a = $1, b = $2, out = $3);"
+        ],
+        "description":"Chip Nand"
+    },
+    "Chip And" : {
+        "prefix": "And",
+        "body": [
+            "And(a = $1, b = $2, out = $3);"
+        ],
+        "description":"Chip And"
+    },
+    "Chip And16" : {
+        "prefix": "And16",
+        "body": [
+            "And16(a = $1, b = $2, out = $3);"
+        ],
+        "description":"Chip And16"
+    },
+    "Chip DMux" : {
+        "prefix": "DMux",
+        "body": [
+            "DMux(in = $1, sel = $2, a = $3, b = $4);"
+        ],
+        "description":"Chip DMux"
+    },
+    "Chip DMux4Way" : {
+        "prefix": "DMux4Way",
+        "body": [
+            "DMux4Way(in = $1, sel = $2, a = $3, b = $4, c = $5, d = $6);"
+        ],
+        "description":"Chip DMux4Way"
+    },
+    "Chip DMux8Way" : {
+        "prefix": "DMux8Way",
+        "body": [
+            "DMux8Way(in = $1, sel = $2, a = $3, b = $4, c = $5, d = $6, e = $7, f = $8, g = $9, h = $10);"
+        ],
+        "description":"Chip DMux8Way"
+    },
+    "Chip Mux" : {
+        "prefix": "Mux",
+        "body": [
+            "Mux(a = $1, b = $2, sel = $3, out = $4);"
+        ],
+        "description":"Chip Mux"
+    },
+    "Chip Mux4Way16" : {
+        "prefix": "Mux4Way16",
+        "body": [
+            "Mux4Way16(a = $1, b = $2, c = $3, d = $4, sel = $5, out = $6);"
+        ],
+        "description":"Chip Mux4Way16"
+    },
+    "Chip Mux8Way16" : {
+        "prefix": "Mux4Way16",
+        "body": [
+            "Mux4Way16(a = $1, b = $2, c = $3, d = $4, e = $5, f = $6, g = $7, h = $8, sel = $9, out = $10);"
+        ],
+        "description":"Chip Mux4Way16"
+    },
+    "Chip Mux16" : {
+        "prefix": "Mux16",
+        "body": [
+            "Mux16(a = $1, b = $2, sel = $3, out = $4);"
+        ],
+        "description":"Chip Mux16"
+    },
+    "Chip Not" : {
+        "prefix": "Not",
+        "body": [
+            "Not(in = $1, out = $2);"
+        ],
+        "description":"Chip Not"
+    },
+    "Chip Not16" : {
+        "prefix": "Not16",
+        "body": [
+            "Not16(in = $1, out = $2);"
+        ],
+        "description":"Chip Not16"
+    },
+    "Chip Or" : {
+        "prefix": "Or",
+        "body": [
+            "Or(a = $1, b = $2, out = $3);"
+        ],
+        "description":"Chip Or"
+    },
+    "Chip Or8Way" : {
+        "prefix": "Or8Way",
+        "body": [
+            "Or8Way(in = $1, out = $2);"
+        ],
+        "description":"Chip Or8Way"
+    },
+    "Chip Or16" : {
+        "prefix": "Or16",
+        "body": [
+            "Or16(a = $1, b = $2, out = $3);"
+        ],
+        "description":"Chip Or16"
+    },
+    "Chip Xor" : {
+        "prefix": "Xor",
+        "body": [
+            "Xor(a = $1, b = $2, out = $3);"
+        ],
+        "description":"Chip Xor"
+    }
+}

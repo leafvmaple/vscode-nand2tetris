@@ -2,14 +2,15 @@
     "name": "nand2tetris",
     "displayName": "Nand2Tetris Language",
     "description": "Language support for Nand2Tetris.",
-    "version": "0.1.1",
+    "version": "0.2.0",
     "icon": "images/icon.png",
     "publisher": "leafvmaple",
     "engines": {
         "vscode": "^1.17.0"
     },
     "categories": [
-        "Languages"
+        "Languages",
+        "Snippets"
     ],
     "license": "MIT",
     "repository": {
@@ -55,6 +56,12 @@
                 "language": "hdl",
                 "scopeName": "source.hdl",
                 "path": "./syntaxes/hdl.tmLanguage.json"
+            }
+        ],
+        "snippets": [
+            {
+                "language": "hdl",
+                "path": "./snippets/snippets.json"
             }
         ]
     },
