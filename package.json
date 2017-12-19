@@ -2,7 +2,7 @@
     "name": "nand2tetris",
     "displayName": "Nand2Tetris Language",
     "description": "Language support for Nand2Tetris.",
-    "version": "0.2.0",
+    "version": "0.2.1",
     "icon": "images/icon.png",
     "publisher": "leafvmaple",
     "engines": {
@@ -15,7 +15,7 @@
     "license": "MIT",
     "repository": {
         "type": "git",
-        "url": "https://github.com/leafvmaple/VSCode-Nand2Tetris.git"
+        "url": "https://github.com/leafvmaple/VSCode-nand2tetris.git"
     },
     "activationEvents": [
         "onCommand:nand2tetris.run"
