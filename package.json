@@ -25,18 +25,36 @@
         "commands": [
             {
                 "command": "nand2tetris.run",
-                "title": "Nand2Tetris: Run Code",
+                "title": "HDL: Run Code",
                 "icon": "./images/icon.png" 
             }
         ],
         "menus": {
             "editor/title": [
                 {
-                    "when": "resourceLangId == hdl",
+                    "when": "resourceLangId == hdl && config.nand2tetris.showRunIconInEditorTitleMenu",
                     "command": "nand2tetris.run",
                     "group": "navigation"
                 }
             ]
+        },
+        "configuration": {
+            "type": "object",
+            "title": "Nand2Tetris configuration",
+            "properties": {
+                "nand2tetris.showRunIconInEditorTitleMenu": {
+                    "type": "boolean",
+                    "default": true,
+                    "description": "Whether to show 'HDL Run Code' icon in editor title menu.",
+                    "scope": "resource"
+                },
+                "nand2tetris.runInTerminal": {
+                    "type": "boolean",
+                    "default": false,
+                    "description": "Whether to run code in Integrated Terminal.",
+                    "scope": "resource"
+                }
+            }
         },
         "languages": [
             {

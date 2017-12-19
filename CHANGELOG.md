@@ -1,5 +1,9 @@
 # Nand2Tetris Change Log
 
+## [0.2.1] 2017-12-19
+
+* Add Language `configuration`.
+
 ## [0.2.0] 2017-12-19
 
 * Add `Snippets` for `HDL` Language.
