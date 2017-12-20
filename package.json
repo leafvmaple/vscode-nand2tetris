@@ -26,7 +26,7 @@
             {
                 "command": "nand2tetris.run",
                 "title": "HDL: Run Code",
-                "icon": "./images/icon.png" 
+                "icon": "./images/icon.png"
             }
         ],
         "menus": {

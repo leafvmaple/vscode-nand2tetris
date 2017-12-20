@@ -5,6 +5,7 @@ import { print } from "util";
 
 export class Commands implements vscode.Disposable {
     private _EXTENSION_NAME = "leafvmaple.nand2tetris";
+    private _LANGUAGE_NAME  = "Nand2Teteris";
     
     private _outputChannel: vscode.OutputChannel;
     private _terminal: vscode.Terminal;
@@ -32,8 +33,8 @@ export class Commands implements vscode.Disposable {
             break;
         }
         
-        this._outputChannel = vscode.window.createOutputChannel("Nand2Tetris");
-        this._terminal = vscode.window.createTerminal("Nand2Tetris");
+        this._outputChannel = vscode.window.createOutputChannel(this._LANGUAGE_NAME);
+        this._terminal = vscode.window.createTerminal(this._LANGUAGE_NAME);
 
         this._extensionPath = vscode.extensions.getExtension(this._EXTENSION_NAME).extensionPath;
         this._n2tComands = "java -classpath \"${CLASSPATH}" + symbol
