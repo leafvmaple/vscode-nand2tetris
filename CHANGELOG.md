@@ -1,5 +1,9 @@
 # Nand2Tetris Change Log
 
+## [0.2.2] 2017-12-20
+
+* Support Run Code in OutputChannel.
+
 ## [0.2.1] 2017-12-19
 
 * Add Language `configuration`.
@@ -16,7 +20,7 @@
 
 * Support `Run Code` for `HDL` Language.
 
-* Add `Run Code` Button to Content Titile.
+* Add Run Code Button to Content Titile.
 
 ## [0.0.2] 2017-12-17
 

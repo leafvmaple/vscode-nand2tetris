@@ -4,6 +4,10 @@ The Visual Studio Code extenstion for Nand2Tetris Language support.
 
 ## Release Notes
 
+### Version 0.2.2
+
+* Support Run Code in OutputChannel.
+
 ### Version 0.2.1
 
 * Add Language `configuration`.
@@ -20,7 +24,7 @@ The Visual Studio Code extenstion for Nand2Tetris Language support.
 
 * Support `Run Code` for `HDL` Language.
 
-* Add Run Code `Button` to Content Titile.
+* Add Run Code Button to Content Titile.
 
 ### Version 0.0.2
 
