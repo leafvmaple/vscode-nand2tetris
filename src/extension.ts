@@ -13,7 +13,7 @@ export function activate(context: vscode.ExtensionContext) {
         const filePath = parse(editor.document.fileName);
         const fileName = join(filePath.dir, filePath.name + ".tst")
         
-        commands.executeCommandInTerminal(fileName)
+        commands.executeCommand(fileName)
     });
 
     context.subscriptions.push(run);

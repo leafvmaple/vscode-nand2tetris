@@ -15,7 +15,7 @@
     "license": "MIT",
     "repository": {
         "type": "git",
-        "url": "https://github.com/leafvmaple/VSCode-nand2tetris.git"
+        "url": "https://github.com/leafvmaple/vscode-nand2tetris.git"
     },
     "activationEvents": [
         "onCommand:nand2tetris.run"
@@ -52,6 +52,18 @@
                     "type": "boolean",
                     "default": false,
                     "description": "Whether to run code in Integrated Terminal.",
+                    "scope": "resource"
+                },
+                "nand2tetris.clearPreviousOutput": {
+                    "type": "boolean",
+                    "default": false,
+                    "description": "Whether to clear previous output before each run.",
+                    "scope": "resource"
+                },
+                "nand2tetris.preserveFocus": {
+                    "type": "boolean",
+                    "default": true,
+                    "description": "Whether to preserve focus on code editor after code run is triggered.",
                     "scope": "resource"
                 }
             }
