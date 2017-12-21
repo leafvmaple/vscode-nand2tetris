@@ -3,9 +3,9 @@ import { join, parse } from "path";
 import * as vscode from "vscode";
 import { Commands } from "./commands";
 
-export function activate(context: vscode.ExtensionContext) {
-    const commands = new Commands();
+const commands = new Commands();
 
+export function activate(context: vscode.ExtensionContext) {
     const run = vscode.commands.registerCommand("nand2tetris.run", (fileUri: vscode.Uri) => {
         const editor = vscode.window.activeTextEditor;
         const filePath = parse(editor.document.fileName);
@@ -18,4 +18,5 @@ export function activate(context: vscode.ExtensionContext) {
 }
 
 export function deactivate() {
+    commands.stopCommand();
 }
