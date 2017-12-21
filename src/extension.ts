@@ -1,7 +1,7 @@
 "use strict";
+import { join, parse } from "path";
 import * as vscode from "vscode";
 import { Commands } from "./commands";
-import { join, parse } from "path";
 
 export function activate(context: vscode.ExtensionContext) {
     const commands = new Commands();

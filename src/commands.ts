@@ -1,7 +1,7 @@
 "use strict";
-import * as vscode from "vscode";
 import { basename } from "path";
 import { print } from "util";
+import * as vscode from "vscode";
 
 export class Commands implements vscode.Disposable {
     private EXTENSION_NAME = "leafvmaple.nand2tetris";
