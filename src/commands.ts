@@ -100,7 +100,7 @@ export class Commands implements vscode.Disposable {
         });
     }
 
-    public stop() {
+    public stopCommand() {
         if (this.isRunning) {
             this.isRunning = false;
             const kill = require("tree-kill");
@@ -109,5 +109,6 @@ export class Commands implements vscode.Disposable {
     }
 
     public dispose() {
+        this.stopCommand();
     }
 }
