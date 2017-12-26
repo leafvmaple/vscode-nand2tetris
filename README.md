@@ -4,9 +4,13 @@ The Visual Studio Code extenstion for Nand2Tetris Language support.
 
 ## Release Notes
 
+### Version 0.2.3
+
+* Fixed the highlight bug of chip inner.
+
 ### Version 0.2.2
 
-* Support Run Code in OutputChannel.
+* Support Run Code in `OutputChannel`.
 
 ### Version 0.2.1
 

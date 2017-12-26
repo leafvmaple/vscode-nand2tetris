@@ -1,8 +1,12 @@
 # Nand2Tetris Change Log
 
+## [0.2.3] 2017-12-26
+
+* Fixed the highlight bug of chip inner.
+
 ## [0.2.2] 2017-12-20
 
-* Support Run Code in OutputChannel.
+* Support Run Code in `OutputChannel`.
 
 ## [0.2.1] 2017-12-19
 
