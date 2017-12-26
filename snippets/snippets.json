@@ -30,7 +30,7 @@
     "Chip DMux4Way" : {
         "prefix": "DMux4Way",
         "body": [
-            "DMux4Way(in = $1, sel = $2, a = $3, b = $4, c = $5, d = $6);"
+            "DMux4Way(in=$1, sel=$2, a=$3, b=$4, c=$5, d=$6);"
         ],
         "description":"Chip DMux4Way"
     },

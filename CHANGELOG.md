@@ -1,5 +1,9 @@
 # Nand2Tetris Change Log
 
+## [0.2.5] 2017-12-26
+
+* Fixed the bug of syntaxes.
+
 ## [0.2.4] 2017-12-26
 
 * Fixed the bug of Run Code.
