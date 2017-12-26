@@ -65,7 +65,7 @@
                     "name": "variable.parameter.hdl"
                 }
             },
-            "match": "([\\w\\d\\_]+)="
+            "match": "([\\w\\d\\_]+)\\s*="
         }
     ],
     "scopeName": "source.hdl"
