@@ -1,5 +1,9 @@
 # Nand2Tetris Change Log
 
+## [0.2.6] 2017-12-26
+
+* Modify the description of snippets.
+
 ## [0.2.5] 2017-12-26
 
 * Fixed the bug of syntaxes.

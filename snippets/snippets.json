@@ -1,4 +1,95 @@
 {
+    "Chip Add16" : {
+        "prefix": "Add16",
+        "body": [
+            "Add16(a=$1, b=$2, out=$3);"
+        ],
+        "description":"Adds two 16-bit values"
+    },
+    "Chip And" : {
+        "prefix": "And",
+        "body": [
+            "And(a=$1, b=$2, out=$3);"
+        ],
+        "description":"And gate"
+    },
+    "Chip And16" : {
+        "prefix": "And16",
+        "body": [
+            "And16(a=$1, b=$2, out=$3);"
+        ],
+        "description":"16-bit bitwise And"
+    },
+    "Chip DMux" : {
+        "prefix": "DMux",
+        "body": [
+            "DMux(in=$1, sel=$2, a=$3, b=$4);"
+        ],
+        "description":"Demultiplexor"
+    },
+    "Chip DMux4Way" : {
+        "prefix": "DMux4Way",
+        "body": [
+            "DMux4Way(in=$1, sel=$2, a=$3, b=$4, c=$5, d=$6);"
+        ],
+        "description":"4-way demultiplexor"
+    },
+    "Chip DMux8Way" : {
+        "prefix": "DMux8Way",
+        "body": [
+            "DMux8Way(in=$1, sel=$2, a=$3, b=$4, c=$5, d=$6, e=$7, f=$8, g=$9, h=$10);"
+        ],
+        "description":"8-way demultiplexor"
+    },
+    "Chip FullAdder" : {
+        "prefix": "FullAdder",
+        "body": [
+            "FullAdder(a=$1, b=$2, c=$3, sum=$4, carry=$5);"
+        ],
+        "description":"Computes the sum of three bits"
+    },
+    "Chip HalfAdder" : {
+        "prefix": "HalfAdder",
+        "body": [
+            "HalfAdder(a=$1, b=$2, sum=$3, carry=$4);"
+        ],
+        "description":"Computes the sum of two bits"
+    },
+    "Chip Inc16" : {
+        "prefix": "Inc16",
+        "body": [
+            "Inc16(in=$1, out=$2);"
+        ],
+        "description":"16-bit incrementer"
+    },
+    "Chip Mux" : {
+        "prefix": "Mux",
+        "body": [
+            "Mux(a=$1, b=$2, sel=$3, out=$4);"
+        ],
+        "description":"Multiplexor"
+    },
+    "Chip Mux4Way16" : {
+        "prefix": "Mux4Way16",
+        "body": [
+            "Mux4Way16(a=$1, b=$2, c=$3, d=$4, sel=$5, out=$6);"
+        ],
+        "description":"4-way 16-bit multiplexor"
+    },
+    "Chip Mux8Way16" : {
+        "prefix": "Mux8Way16",
+        "body": [
+            "Mux4Way16(a=$1, b=$2, c=$3, d=$4, e=$5, f=$6, g=$7, h=$8, sel=$9, out=$10);"
+        ],
+        "description":"8-way 16-bit multiplexor"
+    },
+    "Chip Mux16" : {
+        "prefix": "Mux16",
+        "body": [
+            "Mux16(a=$1, b=$2, sel=$3, out=$4);"
+        ],
+        "description":"16-bit multiplexor"
+    },
     "Chip Nand" : {
         "prefix": "Nand",
         "body": [
@@ -6,109 +97,46 @@
         ],
         "description":"Chip Nand"
     },
-    "Chip And" : {
-        "prefix": "And",
-        "body": [
-            "And(a=$1, b=$2, out=$3);"
-        ],
-        "description":"Chip And"
-    },
-    "Chip And16" : {
-        "prefix": "And16",
-        "body": [
-            "And16(a=$1, b=$2, out=$3);"
-        ],
-        "description":"Chip And16"
-    },
-    "Chip DMux" : {
-        "prefix": "DMux",
-        "body": [
-            "DMux(in=$1, sel=$2, a=$3, b=$4);"
-        ],
-        "description":"Chip DMux"
-    },
-    "Chip DMux4Way" : {
-        "prefix": "DMux4Way",
-        "body": [
-            "DMux4Way(in=$1, sel=$2, a=$3, b=$4, c=$5, d=$6);"
-        ],
-        "description":"Chip DMux4Way"
-    },
-    "Chip DMux8Way" : {
-        "prefix": "DMux8Way",
-        "body": [
-            "DMux8Way(in=$1, sel=$2, a=$3, b=$4, c=$5, d=$6, e=$7, f=$8, g=$9, h=$10);"
-        ],
-        "description":"Chip DMux8Way"
-    },
-    "Chip Mux" : {
-        "prefix": "Mux",
-        "body": [
-            "Mux(a=$1, b=$2, sel=$3, out=$4);"
-        ],
-        "description":"Chip Mux"
-    },
-    "Chip Mux4Way16" : {
-        "prefix": "Mux4Way16",
-        "body": [
-            "Mux4Way16(a=$1, b=$2, c=$3, d=$4, sel=$5, out=$6);"
-        ],
-        "description":"Chip Mux4Way16"
-    },
-    "Chip Mux8Way16" : {
-        "prefix": "Mux8Way16",
-        "body": [
-            "Mux4Way16(a=$1, b=$2, c=$3, d=$4, e=$5, f=$6, g=$7, h=$8, sel=$9, out=$10);"
-        ],
-        "description":"Chip Mux4Way16"
-    },
-    "Chip Mux16" : {
-        "prefix": "Mux16",
-        "body": [
-            "Mux16(a=$1, b=$2, sel=$3, out=$4);"
-        ],
-        "description":"Chip Mux16"
-    },
     "Chip Not" : {
         "prefix": "Not",
         "body": [
             "Not(in=$1, out=$2);"
         ],
-        "description":"Chip Not"
+        "description":"Not gate"
     },
     "Chip Not16" : {
         "prefix": "Not16",
         "body": [
             "Not16(in=$1, out=$2);"
         ],
-        "description":"Chip Not16"
+        "description":"16-bit Not"
     },
     "Chip Or" : {
         "prefix": "Or",
         "body": [
             "Or(a=$1, b=$2, out=$3);"
         ],
-        "description":"Chip Or"
+        "description":"Or gate"
     },
     "Chip Or8Way" : {
         "prefix": "Or8Way",
         "body": [
             "Or8Way(in=$1, out=$2);"
         ],
-        "description":"Chip Or8Way"
+        "description":"8-way Or"
     },
     "Chip Or16" : {
         "prefix": "Or16",
         "body": [
             "Or16(a=$1, b=$2, out=$3);"
         ],
-        "description":"Chip Or16"
+        "description":"16-bit bitwise Or"
     },
     "Chip Xor" : {
         "prefix": "Xor",
         "body": [
             "Xor(a=$1, b=$2, out=$3);"
         ],
-        "description":"Chip Xor"
+        "description":"Exclusive-or gate"
     }
 }

@@ -4,6 +4,10 @@ The Visual Studio Code extenstion for Nand2Tetris Language support.
 
 ## Release Notes
 
+### Version 0.2.6
+
+* Modify the description of snippets.
+
 ### Version 0.2.5
 
 * Fixed the bug of syntaxes.
