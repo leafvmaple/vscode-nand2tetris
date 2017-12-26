@@ -1,5 +1,11 @@
 # Nand2Tetris Change Log
 
+## [0.2.4] 2017-12-26
+
+* Fixed the bug of Run Code.
+
+* Support open `Hardware Simulator` in VSCode.
+
 ## [0.2.3] 2017-12-26
 
 * Fixed the highlight bug of chip inner.

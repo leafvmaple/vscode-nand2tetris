@@ -4,6 +4,12 @@ The Visual Studio Code extenstion for Nand2Tetris Language support.
 
 ## Release Notes
 
+### Version 0.2.4
+
+* Fixed the bug of Run Code.
+
+* Support open `Hardware Simulator` in vscode.
+
 ### Version 0.2.3
 
 * Fixed the highlight bug of chip inner.

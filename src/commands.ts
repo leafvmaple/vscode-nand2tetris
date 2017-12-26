@@ -58,6 +58,11 @@ export class Commands implements vscode.Disposable {
         }
     }
 
+    public executeOpenCommand(): void {
+        this.terminal.sendText(`cd "${this.extensionPath}"`);
+        this.terminal.sendText(this.n2tComands);
+    }
+
     public executeCommandInTerminal(fileName: string): void {
         if (this.config.get<boolean>("clearPreviousOutput")) {
             vscode.commands.executeCommand("workbench.action.terminal.clear");
@@ -75,7 +80,7 @@ export class Commands implements vscode.Disposable {
         this.isSuccess = false;
         this.outputChannel.show(this.config.get<boolean>("preserveFocus"));
         this.outputChannel.appendLine(`[Running] ${basename(fileName, `.tst`)}.hdl`);
-        const exec = require("childprocess").exec;
+        const exec = require("child_process").exec;
         const startTime = new Date();
         this.process = exec(this.n2tComands + fileName, { cwd: this.extensionPath });
 
@@ -94,8 +99,8 @@ export class Commands implements vscode.Disposable {
             this.isRunning = false;
             const endTime = new Date();
             const elapsedTime = (endTime.getTime() - startTime.getTime()) / 1000;
-            this.outputChannel.appendLine(`[Done] Comparison ${(this.isSuccess ? `Successfully` : `Failure`)}
-                                            with code=${code} in ${elapsedTime} seconds`);
+            this.outputChannel.appendLine(`[Done] Comparison ${(this.isSuccess ?
+                                          `Successfully` : `Failure`)} with code=${code} in ${elapsedTime} seconds`);
             this.outputChannel.appendLine("");
         });
     }

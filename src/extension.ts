@@ -13,6 +13,14 @@ export function activate(context: vscode.ExtensionContext) {
         commands.executeCommand(fileName);
     });
 
+    const open = vscode.commands.registerCommand("nand2tetris.open", (fileUri: vscode.Uri) => {
+        commands.executeOpenCommand();
+    });
+
+    const stop = vscode.commands.registerCommand("nand2tetris.stop", () => {
+        commands.stopCommand();
+    });
+
     context.subscriptions.push(run);
     context.subscriptions.push(commands);
 }

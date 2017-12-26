@@ -2,7 +2,7 @@
     "name": "nand2tetris",
     "displayName": "Nand2Tetris Language",
     "description": "Language support for Nand2Tetris.",
-    "version": "0.2.3",
+    "version": "0.2.4",
     "icon": "images/icon.png",
     "publisher": "leafvmaple",
     "engines": {
@@ -18,7 +18,9 @@
         "url": "https://github.com/leafvmaple/vscode-nand2tetris.git"
     },
     "activationEvents": [
-        "onCommand:nand2tetris.run"
+        "onCommand:nand2tetris.run",
+        "onCommand:nand2tetris.open",
+        "onCommand:nand2tetris.stop"
     ],
     "main": "./out/extension",
     "contributes": {
@@ -27,6 +29,14 @@
                 "command": "nand2tetris.run",
                 "title": "HDL: Run Code",
                 "icon": "./images/icon.png"
+            },
+            {
+                "command": "nand2tetris.open",
+                "title": "HDL: Open Hardware Simulator"
+            },
+            {
+                "command": "nand2tetris.stop",
+                "title": "HDL: Stop Running"
             }
         ],
         "menus": {
