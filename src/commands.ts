@@ -1,5 +1,5 @@
 "use strict";
-import { basename } from "path";
+import { basename, join, parse } from "path";
 import { print } from "util";
 import * as vscode from "vscode";
 
@@ -9,6 +9,7 @@ export class Commands implements vscode.Disposable {
     private outputChannel: vscode.OutputChannel;
     private terminal: vscode.Terminal;
     private config: vscode.WorkspaceConfiguration;
+    private document: vscode.TextDocument;
     private platform: string;
     private extensionPath: string;
     private n2tComands: string;
@@ -45,16 +46,32 @@ export class Commands implements vscode.Disposable {
                         + this.extensionPath + "/bin/lib/Compilers.jar\" HardwareSimulatorMain ";
     }
 
-    public executeCommand(fileName: string): void {
+    public async executeCommand(fileUri: vscode.Uri) {
         if (this.isRunning) {
             vscode.window.showInformationMessage("Code is already running!");
             return;
         }
-        this.config = vscode.workspace.getConfiguration("nand2tetris");
-        if (this.config.get<boolean>("runInTerminal")) {
-            this.executeCommandInTerminal(fileName);
+        const editor = vscode.window.activeTextEditor;
+        if (fileUri && editor && fileUri.fsPath !== editor.document.uri.fsPath) {
+            this.document = await vscode.workspace.openTextDocument(fileUri);
+        } else if (editor) {
+            this.document = editor.document;
         } else {
-            this.executeCommandInOutputChannel(fileName);
+            vscode.window.showInformationMessage("No code found or selected.");
+            return;
+        }
+
+        const filePath = parse(this.document.fileName);
+        const fileName = join(filePath.dir, filePath.name + ".tst");
+        this.config = vscode.workspace.getConfiguration("nand2tetris");
+
+        const runInTerminal = this.config.get<boolean>("runInTerminal");
+        const clearPreviousOutput = this.config.get<boolean>("clearPreviousOutput");
+        const preserveFocus = this.config.get<boolean>("preserveFocus");
+        if (runInTerminal) {
+            this.executeCommandInTerminal(fileName, clearPreviousOutput, preserveFocus);
+        } else {
+            this.executeCommandInOutputChannel(fileName, clearPreviousOutput, preserveFocus);
         }
     }
 
@@ -63,22 +80,22 @@ export class Commands implements vscode.Disposable {
         this.terminal.sendText(this.n2tComands);
     }
 
-    public executeCommandInTerminal(fileName: string): void {
-        if (this.config.get<boolean>("clearPreviousOutput")) {
+    public executeCommandInTerminal(fileName: string, clearPreviousOutput, preserveFocus): void {
+        if (clearPreviousOutput) {
             vscode.commands.executeCommand("workbench.action.terminal.clear");
         }
-        this.terminal.show(this.config.get<boolean>("preserveFocus"));
+        this.terminal.show(preserveFocus);
         this.terminal.sendText(`cd "${this.extensionPath}"`);
         this.terminal.sendText(this.n2tComands + fileName);
     }
 
-    public executeCommandInOutputChannel(fileName: string): void {
-        if (this.config.get<boolean>("clearPreviousOutput")) {
+    public executeCommandInOutputChannel(fileName: string, clearPreviousOutput, preserveFocus): void {
+        if (clearPreviousOutput) {
             this.outputChannel.clear();
         }
         this.isRunning = true;
         this.isSuccess = false;
-        this.outputChannel.show(this.config.get<boolean>("preserveFocus"));
+        this.outputChannel.show(preserveFocus);
         this.outputChannel.appendLine(`[Running] ${basename(fileName, `.tst`)}.hdl`);
         const exec = require("child_process").exec;
         const startTime = new Date();

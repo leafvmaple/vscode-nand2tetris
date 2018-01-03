@@ -1,142 +1,220 @@
 {
-    "Chip Add16" : {
-        "prefix": "Add16",
+    "CHIP Class": {
+        "body": [
+            "CHIP $1 {", 
+            "    IN $2;", 
+            "    OUT $3;", 
+            "", 
+            "    PARTS:", 
+            "    $4", 
+            "}"
+        ], 
+        "description": "Create CHIP class.\n", 
+        "prefix": "CHIP"
+    }, 
+    "Chip Add16": {
         "body": [
             "Add16(a=$1, b=$2, out=$3);"
-        ],
-        "description":"Adds two 16-bit values"
-    },
-    "Chip And" : {
-        "prefix": "And",
+        ], 
+        "description": [
+            "* Adds two 16-bit values.\n* The most significant carry bit is ignored.\n"
+        ], 
+        "prefix": "Add16"
+    }, 
+    "Chip And": {
         "body": [
             "And(a=$1, b=$2, out=$3);"
-        ],
-        "description":"And gate"
-    },
-    "Chip And16" : {
-        "prefix": "And16",
+        ], 
+        "description": "* And gate:\n* out = 1 if (a == 1 and b == 1)\n* 0 otherwise\n", 
+        "prefix": "And"
+    }, 
+    "Chip And16": {
         "body": [
             "And16(a=$1, b=$2, out=$3);"
-        ],
-        "description":"16-bit bitwise And"
-    },
-    "Chip DMux" : {
-        "prefix": "DMux",
+        ], 
+        "description": "* 16-bit bitwise And:\n* for i = 0..15: out[i] = (a[i] and b[i])\n", 
+        "prefix": "And16"
+    }, 
+    "Chip Bit": {
+        "body": [
+            "Bit(in=$1, load=$2, out=$3);"
+        ], 
+        "description": "* 1-bit register:\n* If load[t] == 1 then out[t+1] = in[t]\n* else out does not change (out[t+1] = out[t])\n", 
+        "prefix": "Bit"
+    }, 
+    "Chip DFF": {
+        "body": [
+            "DFF(in=$1, out=$2);"
+        ], 
+        "description": "* Data Flip-flop:\n* out(t) = in(t-1)\n* where t is the current time unit, or clock cycle.\n", 
+        "prefix": "DFF"
+    }, 
+    "Chip DMux": {
         "body": [
             "DMux(in=$1, sel=$2, a=$3, b=$4);"
-        ],
-        "description":"Demultiplexor"
-    },
-    "Chip DMux4Way" : {
-        "prefix": "DMux4Way",
+        ], 
+        "description": "* Demultiplexor:\n* {a, b} = {in, 0} if sel == 0\n* {0, in} if sel == 1\n", 
+        "prefix": "DMux"
+    }, 
+    "Chip DMux4Way": {
         "body": [
             "DMux4Way(in=$1, sel=$2, a=$3, b=$4, c=$5, d=$6);"
-        ],
-        "description":"4-way demultiplexor"
-    },
-    "Chip DMux8Way" : {
-        "prefix": "DMux8Way",
+        ], 
+        "description": "* 4-way demultiplexor:\n* {a, b, c, d} = {in, 0, 0, 0} if sel == 00\n* {0, in, 0, 0} if sel == 01\n* {0, 0, in, 0} if sel == 10\n* {0, 0, 0, in} if sel == 11\n", 
+        "prefix": "DMux4Way"
+    }, 
+    "Chip DMux8Way": {
         "body": [
             "DMux8Way(in=$1, sel=$2, a=$3, b=$4, c=$5, d=$6, e=$7, f=$8, g=$9, h=$10);"
-        ],
-        "description":"8-way demultiplexor"
-    },
-    "Chip FullAdder" : {
-        "prefix": "FullAdder",
+        ], 
+        "description": "* 8-way demultiplexor:\n* {a, b, c, d, e, f, g, h} = {in, 0, 0, 0, 0, 0, 0, 0} if sel == 000\n* {0, in, 0, 0, 0, 0, 0, 0} if sel == 001\n* etc.\n* {0, 0, 0, 0, 0, 0, 0, in} if sel == 111\n", 
+        "prefix": "DMux8Way"
+    }, 
+    "Chip FullAdder": {
         "body": [
             "FullAdder(a=$1, b=$2, c=$3, sum=$4, carry=$5);"
-        ],
-        "description":"Computes the sum of three bits"
-    },
-    "Chip HalfAdder" : {
-        "prefix": "HalfAdder",
+        ], 
+        "description": "* Full adder:\n* Computes sum, the least significant bit of a + b + c, and carry, the most significant bit of a + b + c.\n", 
+        "prefix": "FullAdder"
+    }, 
+    "Chip HalfAdder": {
         "body": [
             "HalfAdder(a=$1, b=$2, sum=$3, carry=$4);"
-        ],
-        "description":"Computes the sum of two bits"
-    },
-    "Chip Inc16" : {
-        "prefix": "Inc16",
+        ], 
+        "description": "* Half adder:\n* Computes sum, the least significnat bit of a + b, and carry, the most significnat bit of a + b.\n", 
+        "prefix": "HalfAdder"
+    }, 
+    "Chip Inc16": {
         "body": [
             "Inc16(in=$1, out=$2);"
-        ],
-        "description":"16-bit incrementer"
-    },
-    "Chip Mux" : {
-        "prefix": "Mux",
+        ], 
+        "description": "* 16-bit incrementer:\n* out = in + 1 (arithmetic addition)\n", 
+        "prefix": "Inc16"
+    }, 
+    "Chip Mux": {
         "body": [
             "Mux(a=$1, b=$2, sel=$3, out=$4);"
-        ],
-        "description":"Multiplexor"
-    },
-    "Chip Mux4Way16" : {
-        "prefix": "Mux4Way16",
-        "body": [
-            "Mux4Way16(a=$1, b=$2, c=$3, d=$4, sel=$5, out=$6);"
-        ],
-        "description":"4-way 16-bit multiplexor"
-    },
-    "Chip Mux8Way16" : {
-        "prefix": "Mux8Way16",
-        "body": [
-            "Mux4Way16(a=$1, b=$2, c=$3, d=$4, e=$5, f=$6, g=$7, h=$8, sel=$9, out=$10);"
-        ],
-        "description":"8-way 16-bit multiplexor"
-    },
-    "Chip Mux16" : {
-        "prefix": "Mux16",
+        ], 
+        "description": "* Multiplexor:\n* If sel == 1 then out = b else out = a.\n", 
+        "prefix": "Mux"
+    }, 
+    "Chip Mux16": {
         "body": [
             "Mux16(a=$1, b=$2, sel=$3, out=$4);"
-        ],
-        "description":"16-bit multiplexor"
-    },
-    "Chip Nand" : {
-        "prefix": "Nand",
+        ], 
+        "description": "* 16-bit multiplexor:\n* for i = 0..15 out[i] = a[i] if sel == 0\n* b[i] if sel == 1\n", 
+        "prefix": "Mux16"
+    }, 
+    "Chip Mux4Way16": {
+        "body": [
+            "Mux4Way16(a=$1, b=$2, c=$3, d=$4, sel=$5, out=$6);"
+        ], 
+        "description": "* 4-way 16-bit multiplexor:\n* out = a if sel == 00\n* b if sel == 01\n* c if sel == 10\n* d if sel == 11\n", 
+        "prefix": "Mux4Way16"
+    }, 
+    "Chip Mux8Way16": {
+        "body": [
+            "Mux8Way16(a=$1, b=$2, c=$3, d=$4, e=$5, f=$6, g=$7, h=$8, sel=$9, out=$10);"
+        ], 
+        "description": "* 8-way 16-bit multiplexor:\n* out = a if sel == 000\n* b if sel == 001\n* etc.\n* h if sel == 111\n", 
+        "prefix": "Mux8Way16"
+    }, 
+    "Chip Nand": {
         "body": [
             "Nand(a=$1, b=$2, out=$3);"
-        ],
-        "description":"Chip Nand"
-    },
-    "Chip Not" : {
-        "prefix": "Not",
+        ], 
+        "description": "* Nand gate:\n* out = a Nand b.\n", 
+        "prefix": "Nand"
+    }, 
+    "Chip Not": {
         "body": [
             "Not(in=$1, out=$2);"
-        ],
-        "description":"Not gate"
-    },
-    "Chip Not16" : {
-        "prefix": "Not16",
+        ], 
+        "description": "* Not gate:\n* out = not in\n", 
+        "prefix": "Not"
+    }, 
+    "Chip Not16": {
         "body": [
             "Not16(in=$1, out=$2);"
-        ],
-        "description":"16-bit Not"
-    },
-    "Chip Or" : {
-        "prefix": "Or",
+        ], 
+        "description": "* 16-bit Not:\n* for i=0..15: out[i] = not in[i]\n", 
+        "prefix": "Not16"
+    }, 
+    "Chip Or": {
         "body": [
             "Or(a=$1, b=$2, out=$3);"
-        ],
-        "description":"Or gate"
-    },
-    "Chip Or8Way" : {
-        "prefix": "Or8Way",
-        "body": [
-            "Or8Way(in=$1, out=$2);"
-        ],
-        "description":"8-way Or"
-    },
-    "Chip Or16" : {
-        "prefix": "Or16",
+        ], 
+        "description": "* Or gate:\n* out = 1 if (a == 1 or b == 1)\n* 0 otherwise\n", 
+        "prefix": "Or"
+    }, 
+    "Chip Or16": {
         "body": [
             "Or16(a=$1, b=$2, out=$3);"
-        ],
-        "description":"16-bit bitwise Or"
-    },
-    "Chip Xor" : {
-        "prefix": "Xor",
+        ], 
+        "description": "* 16-bit bitwise Or gate:\n* for i = 0..15 out[i] = a[i] or b[i].\n", 
+        "prefix": "Or16"
+    }, 
+    "Chip Or8Way": {
+        "body": [
+            "Or8Way(in=$1, out=$2);"
+        ], 
+        "description": "* 8-way Or\n* out = (in[0] or in[1] or ... or in[7])\n", 
+        "prefix": "Or8Way"
+    }, 
+    "Chip PC": {
+        "body": [
+            "PC(in=$1, load=$2, inc=$3, reset=$4, out=$5);"
+        ], 
+        "description": "* A 16-bit counter with load and reset control bits.\n* if (reset[t] == 1) out[t+1] = 0\n* else if (load[t] == 1)  out[t+1] = in[t]\n* else if (inc[t] == 1)   out[t+1] = out[t] + 1  (integer addition)\n* else out[t+1] = out[t]\n", 
+        "prefix": "PC"
+    }, 
+    "Chip RAM16K": {
+        "body": [
+            "RAM16K(in=$1, load=$2, address=$3, out=$4);"
+        ], 
+        "description": "* Memory of 16K registers, each 16 bit-wide. Out holds the value stored at the memory location specified by address.\n* If load==1, then the in value is loaded into the memory location specified by address (the loaded value will be emitted to out from the next time step onward).\n", 
+        "prefix": "RAM16K"
+    }, 
+    "Chip RAM4K": {
+        "body": [
+            "RAM4K(in=$1, load=$2, address=$3, out=$4);"
+        ], 
+        "description": "* Memory of 4K registers, each 16 bit-wide. Out holds the value stored at the memory location specified by address.\n* If load==1, then the in value is loaded into the memory location specified by address (the loaded value will be emitted to out from the next time step onward).\n", 
+        "prefix": "RAM4K"
+    }, 
+    "Chip RAM512": {
+        "body": [
+            "RAM512(in=$1, load=$2, address=$3, out=$4);"
+        ], 
+        "description": "* Memory of 512 registers, each 16 bit-wide. Out holds the value stored at the memory location specified by address.\n* If load==1, then the in value is loaded into the memory location specified by address (the loaded value will be emitted to out from the next time step onward).\n", 
+        "prefix": "RAM512"
+    }, 
+    "Chip RAM64": {
+        "body": [
+            "RAM64(in=$1, load=$2, address=$3, out=$4);"
+        ], 
+        "description": "* Memory of 64 registers, each 16 bit-wide. Out holds the value stored at the memory location specified by address.\n* If load==1, then the in value is loaded into the memory location specified by address (the loaded value will be emitted to out from the next time step onward).\n", 
+        "prefix": "RAM64"
+    }, 
+    "Chip RAM8": {
+        "body": [
+            "RAM8(in=$1, load=$2, address=$3, out=$4);"
+        ], 
+        "description": "* Memory of 8 registers, each 16 bit-wide. Out holds the value stored at the memory location specified by address.\n* If load==1, then the in value is loaded into the memory location specified by address (the loaded value will be emitted to out from the next time step onward).\n", 
+        "prefix": "RAM8"
+    }, 
+    "Chip Register": {
+        "body": [
+            "Register(in=$1, load=$2, out=$3);"
+        ], 
+        "description": "* 16-bit register:\n* If load[t] == 1 then out[t+1] = in[t]\n* else out does not change\n", 
+        "prefix": "Register"
+    }, 
+    "Chip Xor": {
         "body": [
             "Xor(a=$1, b=$2, out=$3);"
-        ],
-        "description":"Exclusive-or gate"
+        ], 
+        "description": "* Exclusive-or gate:\n* out = !(a == b).\n", 
+        "prefix": "Xor"
     }
 }

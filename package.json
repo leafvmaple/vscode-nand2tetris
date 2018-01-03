@@ -1,8 +1,8 @@
 {
     "name": "nand2tetris",
-    "displayName": "Nand2Tetris Language",
-    "description": "Language support for Nand2Tetris.",
-    "version": "0.2.6",
+    "displayName": "Nand2Tetris Tools",
+    "description": "HDL Language support for Nand2Tetris.",
+    "version": "0.2.7",
     "icon": "images/icon.png",
     "publisher": "leafvmaple",
     "engines": {
@@ -28,7 +28,7 @@
             {
                 "command": "nand2tetris.run",
                 "title": "HDL: Run Code",
-                "icon": "./images/icon.png"
+                "icon": "./images/button.png"
             },
             {
                 "command": "nand2tetris.open",

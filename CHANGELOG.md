@@ -1,5 +1,11 @@
 # Nand2Tetris Change Log
 
+## [0.2.7] 2017-12-27
+
+* Add CHIP Class snippets.
+
+* Change extension icon.
+
 ## [0.2.6] 2017-12-26
 
 * Modify the description of snippets.

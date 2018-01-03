@@ -4,6 +4,12 @@ The Visual Studio Code extenstion for Nand2Tetris Language support.
 
 ## Release Notes
 
+### Version 0.2.7
+
+* Add CHIP Class snippets.
+
+* Change extension icon.
+
 ### Version 0.2.6
 
 * Modify the description of snippets.
