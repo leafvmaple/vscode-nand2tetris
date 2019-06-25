@@ -1,6 +1,5 @@
 "use strict";
 import { basename, join, parse } from "path";
-import { print } from "util";
 import * as vscode from "vscode";
 
 export class Commands implements vscode.Disposable {
@@ -105,14 +104,14 @@ export class Commands implements vscode.Disposable {
             if (data.match("successfully")) {
                 this.isSuccess = true;
             }
-            this.outputChannel.append(data);
+            this.outputChannel.appendLine(data);
         });
 
         this.process.stderr.on("data", (data) => {
             if (data.match("java")) {
                 data = "You need to install [Java Runtime Environment] First.";
             }
-            this.outputChannel.append(data);
+            this.outputChannel.appendLine(data);
         });
 
         this.process.on("close", (code) => {
