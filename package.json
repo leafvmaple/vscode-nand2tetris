@@ -2,14 +2,14 @@
     "name": "nand2tetris",
     "displayName": "Nand2Tetris Tools",
     "description": "HDL Language support for Nand2Tetris.",
-    "version": "0.2.7",
+    "version": "0.2.8",
     "icon": "images/icon.png",
     "publisher": "leafvmaple",
     "engines": {
         "vscode": "^1.17.0"
     },
     "categories": [
-        "Languages",
+        "Programming Languages",
         "Snippets"
     ],
     "license": "MIT",
