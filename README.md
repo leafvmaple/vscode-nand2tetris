@@ -2,7 +2,35 @@
 
 The Visual Studio Code extenstion for Nand2Tetris Language support.
 
+## Installation
+
+Install it from [VS Code Marketplace](https://marketplace.visualstudio.com/items/leafvmaple.nand2tetris)
+
+## Run Code
+
+* **Install [Java Runtime Environment](https://www.java.com/en/download/manual.jsp)**
+
+* **Click the `Run Code` Button**
+
+## Commands
+
+* **HDL: Run Code**
+
+    Run the HDL Code.
+
+* **HDL: Open Hardware Simulator**
+
+    Open the Hardware Simulator.
+
+* **HDL: Stop Running**
+
+    Stop Running Code.
+
 ## Release Notes
+
+### Version 0.2.8
+
+* Output error message when java in not installed.
 
 ### Version 0.2.7
 
@@ -57,5 +85,3 @@ The Visual Studio Code extenstion for Nand2Tetris Language support.
 ### Version 0.0.1
 
 * Create the `tmLanguage`.
-
------------------------------------------------------------------------------------------------------------

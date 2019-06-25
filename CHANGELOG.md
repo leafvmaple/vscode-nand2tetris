@@ -1,5 +1,9 @@
 # Nand2Tetris Change Log
 
+## [0.2.8] 2019-06-25
+
+* Output error message when java in not installed.
+
 ## [0.2.7] 2017-12-27
 
 * Add CHIP Class snippets.

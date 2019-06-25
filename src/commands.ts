@@ -109,6 +109,9 @@ export class Commands implements vscode.Disposable {
         });
 
         this.process.stderr.on("data", (data) => {
+            if (data.match("java")) {
+                data = "You need to install [Java Runtime Environment] First.";
+            }
             this.outputChannel.append(data);
         });
 
