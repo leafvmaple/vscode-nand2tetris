@@ -1,10 +1,12 @@
 "use strict";
 import { basename, join, parse } from "path";
 import * as vscode from "vscode";
+import { zip } from "compressing";
 
 export class Commands implements vscode.Disposable {
     private EXTENSION_NAME = "leafvmaple.nand2tetris";
     private LANGUAGE_NAME  = "Nand2Teteris";
+    private PROJECT_DIR = ["1", "2", "3"];
     private outputChannel: vscode.OutputChannel;
     private terminal: vscode.Terminal;
     private config: vscode.WorkspaceConfiguration;
@@ -13,6 +15,7 @@ export class Commands implements vscode.Disposable {
     private extensionPath: string;
     private n2tComands: string;
     private isRunning: boolean;
+    private isCompressing: boolean;
     private isSuccess: boolean;
     private process;
 
@@ -134,5 +137,101 @@ export class Commands implements vscode.Disposable {
 
     public dispose() {
         this.stopCommand();
+    }
+
+    public async zipCommand() {
+        if (this.isCompressing) {
+            vscode.window.showInformationMessage("Already Compressing!");
+            return;
+        }
+
+        const promptOptions = {
+            prompt: 'WakaTime Api Key',
+            placeHolder: "Enter your folder name that want to compress.",
+            value: "1",
+            ignoreFocusOut: true,
+            validateInput: function(text){return text;}
+        };
+
+        let projectName;
+        vscode.window.showInputBox(promptOptions).then(val => {
+            projectName = val;
+        });
+
+        this.document = vscode.window.activeTextEditor.document;
+        const filePath = parse(this.document.fileName).dir;
+        const dirArr = filePath.split('/').filter(_=> _).reverse();
+
+        if (this.PROJECT_DIR.find(s => s === dirArr[0])) {
+            projectName = dirArr[0];
+        } else if ((dirArr[0] === "a" || dirArr[0] === "b") && this.PROJECT_DIR.find(s => s === dirArr[1])) {
+            projectName = dirArr[1];
+        }
+
+        this.config = vscode.workspace.getConfiguration("nand2tetris");
+
+        const runInTerminal = this.config.get<boolean>("runInTerminal");
+        const clearPreviousOutput = this.config.get<boolean>("clearPreviousOutput");
+        const preserveFocus = this.config.get<boolean>("preserveFocus");
+        if (runInTerminal) {
+            this.zipCommandInTerminal(filePath, projectName, clearPreviousOutput, preserveFocus);
+        } else {
+            this.zipCommandInOutputChannel(filePath, projectName, clearPreviousOutput, preserveFocus);
+        }
+    }
+
+    public zipCommandInTerminal(filePath: string, projectName: string, clearPreviousOutput, preserveFocus): void {
+        if (clearPreviousOutput) {
+            vscode.commands.executeCommand("workbench.action.terminal.clear");
+        }
+
+        this.terminal.show(preserveFocus);
+
+        new zip.UncompressStream({ source: join(filePath, `project"${projectName}".zip`) })
+        .on("error", () => {
+            //this.outputChannel.appendLine("[Error] Compress Error!");
+        })
+        .on("finish", () => {
+            this.isRunning = false;
+            //this.outputChannel.appendLine("[Done] Compress successfully");
+        })
+        .on("entry", (header, stream, next) => {
+            stream.on("end", next);
+
+            if (header.type === "file") {
+                const fs = require("fs");
+                stream.pipe(fs.createWriteStream(join(filePath, header.name)));
+            }
+        });
+    }
+
+    public zipCommandInOutputChannel(filePath: string, projectName: string, clearPreviousOutput, preserveFocus): void {
+        if (clearPreviousOutput) {
+            this.outputChannel.clear();
+        }
+        this.isRunning = true;
+        this.isSuccess = false;
+        this.outputChannel.show(preserveFocus);
+        this.outputChannel.appendLine(`[Compressing] ${filePath}`);
+        const exec = require("child_process").exec;
+        const startTime = new Date();
+        this.process = exec({ cwd: this.extensionPath });
+
+        new zip.UncompressStream({ source: join(filePath, `project"${projectName}".zip`) })
+        .on("error", () => {
+            this.outputChannel.appendLine("[Error] Compress Error!");
+        })
+        .on("finish", () => {
+            this.isRunning = false;
+            this.outputChannel.appendLine("[Done] Compress successfully");
+        })
+        .on("entry", (header, stream, next) => {
+            stream.on("end", next);
+
+            if (header.type === "file") {
+                const fs = require("fs");
+                stream.pipe(fs.createWriteStream(join(filePath, header.name)));
+            }
+        });
     }
 }

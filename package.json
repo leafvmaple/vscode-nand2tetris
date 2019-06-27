@@ -20,23 +20,28 @@
     "activationEvents": [
         "onCommand:nand2tetris.run",
         "onCommand:nand2tetris.open",
-        "onCommand:nand2tetris.stop"
+        "onCommand:nand2tetris.stop",
+        "onCommand:nand2tetris.zip"
     ],
     "main": "./out/extension",
     "contributes": {
         "commands": [
             {
                 "command": "nand2tetris.run",
-                "title": "HDL: Run Code",
+                "title": "Nand2Tetris: Run Code",
                 "icon": "./images/button.png"
             },
             {
                 "command": "nand2tetris.open",
-                "title": "HDL: Open Hardware Simulator"
+                "title": "Nand2Tetris: Open Hardware Simulator"
             },
             {
                 "command": "nand2tetris.stop",
-                "title": "HDL: Stop Running"
+                "title": "Nand2Tetris: Stop Running"
+            },
+            {
+                "command": "nand2tetris.zip",
+                "title": "Nand2Tetris: Auto compress files to a zip file that can easily commit to website"
             }
         ],
         "menus": {
@@ -113,7 +118,8 @@
         "tslint": "tslint -t verbose src/**/*.ts"
     },
     "dependencies": {
-        "tree-kill": "^1.1.0"
+        "tree-kill": "^1.1.0",
+        "compressing": "^1.4.0"
     },
     "devDependencies": {
         "typescript": "^2.6.1",
