@@ -1,12 +1,11 @@
 "use strict";
 import { basename, join, parse } from "path";
 import * as vscode from "vscode";
-import { zip } from "compressing";
 
 export class Commands implements vscode.Disposable {
     private EXTENSION_NAME = "leafvmaple.nand2tetris";
     private LANGUAGE_NAME  = "Nand2Teteris";
-    private PROJECT_DIR = ["1", "2", "3"];
+    private PROJECT_DIR = ["01", "02", "03"];
     private outputChannel: vscode.OutputChannel;
     private terminal: vscode.Terminal;
     private config: vscode.WorkspaceConfiguration;
@@ -154,13 +153,13 @@ export class Commands implements vscode.Disposable {
         };
 
         let projectName;
-        vscode.window.showInputBox(promptOptions).then(val => {
-            projectName = val;
-        });
+        //vscode.window.showInputBox(promptOptions).then(val => {
+        //    projectName = val;
+        //});
 
         this.document = vscode.window.activeTextEditor.document;
         const filePath = parse(this.document.fileName).dir;
-        const dirArr = filePath.split('/').filter(_=> _).reverse();
+        const dirArr = filePath.split('\\').filter(_=> _).reverse();
 
         if (this.PROJECT_DIR.find(s => s === dirArr[0])) {
             projectName = dirArr[0];
@@ -187,22 +186,33 @@ export class Commands implements vscode.Disposable {
 
         this.terminal.show(preserveFocus);
 
-        new zip.UncompressStream({ source: join(filePath, `project"${projectName}".zip`) })
-        .on("error", () => {
-            //this.outputChannel.appendLine("[Error] Compress Error!");
-        })
-        .on("finish", () => {
-            this.isRunning = false;
-            //this.outputChannel.appendLine("[Done] Compress successfully");
-        })
-        .on("entry", (header, stream, next) => {
-            stream.on("end", next);
-
-            if (header.type === "file") {
-                const fs = require("fs");
-                stream.pipe(fs.createWriteStream(join(filePath, header.name)));
-            }
+        const fs = require("fs");
+        const archiver = require("archiver");
+        const output = fs.createWriteStream(`${filePath}\\${projectName}.zip`);
+        const archive = archiver("zip", {
+            zlib: { level: 9 }
         });
+
+        output.on("close", function() {
+            this.terminal.sendText(archive.pointer() + ' total bytes');
+            this.terminal.sendText("archiver has been finalized and the output file descriptor has closed.");
+        });
+
+        output.on("end", function() {
+            this.terminal.sendText('Data has been drained');
+        });
+
+        archive.on("end", function(){
+            this.terminal.sendText(`[Done] Compression finish.`);
+        });
+
+        archive.on("error", function(err){
+            throw err;
+        });
+
+        archive.pipe(output);
+        archive.directory(`${filePath}`, false);
+        archive.finalize();
     }
 
     public zipCommandInOutputChannel(filePath: string, projectName: string, clearPreviousOutput, preserveFocus): void {
@@ -213,25 +223,33 @@ export class Commands implements vscode.Disposable {
         this.isSuccess = false;
         this.outputChannel.show(preserveFocus);
         this.outputChannel.appendLine(`[Compressing] ${filePath}`);
-        const exec = require("child_process").exec;
-        const startTime = new Date();
-        this.process = exec({ cwd: this.extensionPath });
 
-        new zip.UncompressStream({ source: join(filePath, `project"${projectName}".zip`) })
-        .on("error", () => {
-            this.outputChannel.appendLine("[Error] Compress Error!");
-        })
-        .on("finish", () => {
-            this.isRunning = false;
-            this.outputChannel.appendLine("[Done] Compress successfully");
-        })
-        .on("entry", (header, stream, next) => {
-            stream.on("end", next);
-
-            if (header.type === "file") {
-                const fs = require("fs");
-                stream.pipe(fs.createWriteStream(join(filePath, header.name)));
-            }
+        const fs = require("fs");
+        const archiver = require("archiver");
+        const output = fs.createWriteStream(`${filePath}\\${projectName}.zip`);
+        const archive = archiver("zip", {
+            zlib: { level: 9 }
         });
+
+        output.on("close", function() {
+            this.outputChannel.appendLine(archive.pointer() + ' total bytes');
+            this.outputChannel.appendLine("archiver has been finalized and the output file descriptor has closed.");
+        });
+
+        output.on("end", function() {
+            this.outputChannel.appendLine('Data has been drained');
+        });
+
+        archive.on("end", function(){
+            this.outputChannel.appendLine(`[Done] Compression finish.`);
+        });
+
+        archive.on("error", function(err){
+            throw err;
+        });
+
+        archive.pipe(output);
+        archive.directory(`${filePath}`, false);
+        archive.finalize();
     }
 }
