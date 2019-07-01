@@ -9,17 +9,21 @@ export function activate(context: vscode.ExtensionContext) {
         commands.executeCommand(fileUri);
     });
 
-    const open = vscode.commands.registerCommand("nand2tetris.open", (fileUri: vscode.Uri) => {
-        commands.executeOpenCommand();
+    const hardware = vscode.commands.registerCommand("nand2tetris.hardware", (fileUri: vscode.Uri) => {
+        commands.executeHarderwareCommand();
+    });
+
+    const assembler = vscode.commands.registerCommand("nand2tetris.assembler", (fileUri: vscode.Uri) => {
+        commands.executeAssemblerCommand();
     });
 
     const stop = vscode.commands.registerCommand("nand2tetris.stop", () => {
         commands.stopCommand();
     });
 
-    const zip = vscode.commands.registerCommand("nand2tetris.zip", () => {
+    /*const zip = vscode.commands.registerCommand("nand2tetris.zip", () => {
         commands.zipCommand();
-    });
+    });*/
 
     context.subscriptions.push(run);
     context.subscriptions.push(commands);

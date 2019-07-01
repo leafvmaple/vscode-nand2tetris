@@ -2,6 +2,14 @@
 
 The Visual Studio Code extenstion for Nand2Tetris Language support.
 
+## Features
+
+1. **Support the Language `HDL` snippets**
+
+2. **Auto load the `.tst` script to check your `.hdl` program**
+
+3. **Auto load the `.tst` script to check your `.asm` program**
+
 ## Installation
 
 Install it from [VS Code Marketplace](https://marketplace.visualstudio.com/items/leafvmaple.nand2tetris)
@@ -14,19 +22,27 @@ Install it from [VS Code Marketplace](https://marketplace.visualstudio.com/items
 
 ## Commands
 
-* **HDL: Run Code**
+* **Nand2Tetris: Run Code**
 
     Run the HDL Code.
 
-* **HDL: Open Hardware Simulator**
+* **Nand2Tetris: Open Hardware Simulator**
 
     Open the Hardware Simulator.
 
-* **HDL: Stop Running**
+* **Nand2Tetris: Open Assembler Simulator**
+
+    Open the Assembler Simulator.
+
+* **Nand2Tetris: Stop Running**
 
     Stop Running Code.
 
 ## Release Notes
+
+### Version 0.3.0
+
+* Support `Run Code` for `ASM` File.
 
 ### Version 0.2.8
 

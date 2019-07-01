@@ -12,7 +12,8 @@ export class Commands implements vscode.Disposable {
     private document: vscode.TextDocument;
     private platform: string;
     private extensionPath: string;
-    private n2tComands: string;
+    private assemblerCmd: string;
+    private hardwareCmd: string;
     private isRunning: boolean;
     private isCompressing: boolean;
     private isSuccess: boolean;
@@ -37,7 +38,8 @@ export class Commands implements vscode.Disposable {
         this.terminal = vscode.window.createTerminal(this.LANGUAGE_NAME);
 
         this.extensionPath = vscode.extensions.getExtension(this.EXTENSION_NAME).extensionPath;
-        this.n2tComands = "java -classpath \"${CLASSPATH}" + symbol
+        this.extensionPath = this.extensionPath.replace("\\", "/");
+        this.hardwareCmd = "java -classpath \"${CLASSPATH}" + symbol
                         + this.extensionPath + symbol
                         + this.extensionPath + "/bin/classes" + symbol
                         + this.extensionPath + "/bin/lib/Hack.jar" + symbol
@@ -45,6 +47,15 @@ export class Commands implements vscode.Disposable {
                         + this.extensionPath + "/bin/lib/Simulators.jar" + symbol
                         + this.extensionPath + "/bin/lib/SimulatorsGUI.jar" + symbol
                         + this.extensionPath + "/bin/lib/Compilers.jar\" HardwareSimulatorMain ";
+
+        this.assemblerCmd = "java -classpath \"${CLASSPATH}" + symbol
+                    + this.extensionPath + symbol
+                    + this.extensionPath + "/bin/classes" + symbol
+                    + this.extensionPath + "/bin/lib/Hack.jar" + symbol
+                    + this.extensionPath + "/bin/lib/HackGUI.jar" + symbol
+                    + this.extensionPath + "/bin/lib/Compilers.jar" + symbol
+                    + this.extensionPath + "/bin/lib/AssemblerGUI.jar" + symbol
+                    + this.extensionPath + "/bin/lib/TranslatorsGUI.jar\" HackAssemblerMain ";
     }
 
     public async executeCommand(fileUri: vscode.Uri) {
@@ -63,44 +74,76 @@ export class Commands implements vscode.Disposable {
         }
 
         const filePath = parse(this.document.fileName);
-        const fileName = join(filePath.dir, filePath.name + ".tst");
-        this.config = vscode.workspace.getConfiguration("nand2tetris");
+        const fileName = filePath.name + filePath.ext;
+        let execName: string;
+        let command: string;
+        if (filePath.ext === ".hdl") {
+            command = this.hardwareCmd;
+            execName = join(filePath.dir, filePath.name + ".tst");
+        } else if (filePath.ext === ".asm") {
+            command = this.assemblerCmd;
+            execName = join(filePath.dir, fileName);
+        }
+        execName = execName.replace(/ /g, "\" \"").replace(/\\/g, "/");
 
+        this.config = vscode.workspace.getConfiguration("nand2tetris");
         const runInTerminal = this.config.get<boolean>("runInTerminal");
         const clearPreviousOutput = this.config.get<boolean>("clearPreviousOutput");
         const preserveFocus = this.config.get<boolean>("preserveFocus");
+
         if (runInTerminal) {
-            this.executeCommandInTerminal(fileName, clearPreviousOutput, preserveFocus);
+            this.executeCommandInTerminal(execName, command, clearPreviousOutput, preserveFocus);
         } else {
-            this.executeCommandInOutputChannel(fileName, clearPreviousOutput, preserveFocus);
+            this.executeCommandInOutputChannel(execName, fileName, command, clearPreviousOutput, preserveFocus);
         }
     }
 
-    public executeOpenCommand(): void {
+    public executeHarderwareCommand(): void {
         this.terminal.sendText(`cd "${this.extensionPath}"`);
-        this.terminal.sendText(this.n2tComands);
+        this.terminal.sendText(this.hardwareCmd);
     }
 
-    public executeCommandInTerminal(fileName: string, clearPreviousOutput, preserveFocus): void {
+    public executeAssemblerCommand(): void {
+        this.terminal.sendText(`cd "${this.extensionPath}"`);
+        this.terminal.sendText(this.assemblerCmd);
+    }
+
+    public stopCommand() {
+        if (this.isRunning) {
+            this.isRunning = false;
+            const kill = require("tree-kill");
+            kill(this.process.pid);
+        }
+    }
+
+    public dispose() {
+        this.stopCommand();
+    }
+
+    private executeCommandInTerminal(execName: string, command: string, clearPreviousOutput, preserveFocus): void {
         if (clearPreviousOutput) {
             vscode.commands.executeCommand("workbench.action.terminal.clear");
         }
         this.terminal.show(preserveFocus);
         this.terminal.sendText(`cd "${this.extensionPath}"`);
-        this.terminal.sendText(this.n2tComands + fileName);
+        this.terminal.sendText(command + execName);
     }
 
-    public executeCommandInOutputChannel(fileName: string, clearPreviousOutput, preserveFocus): void {
+    private executeCommandInOutputChannel(execName: string,
+                                          fileName: string,
+                                          command: string,
+                                          clearPreviousOutput,
+                                          preserveFocus): void {
         if (clearPreviousOutput) {
             this.outputChannel.clear();
         }
         this.isRunning = true;
         this.isSuccess = false;
         this.outputChannel.show(preserveFocus);
-        this.outputChannel.appendLine(`[Running] ${basename(fileName, `.tst`)}.hdl`);
+        this.outputChannel.appendLine(`[Running] ${fileName}`);
         const exec = require("child_process").exec;
         const startTime = new Date();
-        this.process = exec(this.n2tComands + fileName, { cwd: this.extensionPath });
+        this.process = exec(command + execName, { cwd: this.extensionPath });
 
         this.process.stdout.on("data", (data) => {
             if (data.match("successfully")) {
@@ -126,19 +169,7 @@ export class Commands implements vscode.Disposable {
         });
     }
 
-    public stopCommand() {
-        if (this.isRunning) {
-            this.isRunning = false;
-            const kill = require("tree-kill");
-            kill(this.process.pid);
-        }
-    }
-
-    public dispose() {
-        this.stopCommand();
-    }
-
-    public async zipCommand() {
+    /*public async zipCommand() {
         if (this.isCompressing) {
             vscode.window.showInformationMessage("Already Compressing!");
             return;
@@ -251,5 +282,5 @@ export class Commands implements vscode.Disposable {
         archive.pipe(output);
         archive.directory(`${filePath}`, false);
         archive.finalize();
-    }
+    }*/
 }

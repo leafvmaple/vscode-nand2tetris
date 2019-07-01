@@ -1,8 +1,8 @@
 {
     "name": "nand2tetris",
     "displayName": "Nand2Tetris Tools",
-    "description": "HDL Language support for Nand2Tetris.",
-    "version": "0.2.8",
+    "description": "A Tool Set for the Open Course Nand2Tetris.",
+    "version": "0.3.0",
     "icon": "images/icon.png",
     "publisher": "leafvmaple",
     "engines": {
@@ -19,9 +19,9 @@
     },
     "activationEvents": [
         "onCommand:nand2tetris.run",
-        "onCommand:nand2tetris.open",
-        "onCommand:nand2tetris.stop",
-        "onCommand:nand2tetris.zip"
+        "onCommand:nand2tetris.hardware",
+        "onCommand:nand2tetris.assembler",
+        "onCommand:nand2tetris.stop"
     ],
     "main": "./out/extension",
     "contributes": {
@@ -32,22 +32,27 @@
                 "icon": "./images/button.png"
             },
             {
-                "command": "nand2tetris.open",
+                "command": "nand2tetris.hardware",
                 "title": "Nand2Tetris: Open Hardware Simulator"
+            },
+            {
+                "command": "nand2tetris.assembler",
+                "title": "Nand2Tetris: Open Assembler Simulator"
             },
             {
                 "command": "nand2tetris.stop",
                 "title": "Nand2Tetris: Stop Running"
-            },
-            {
-                "command": "nand2tetris.zip",
-                "title": "Nand2Tetris: Auto compress files to a zip file that can easily commit to website"
             }
         ],
         "menus": {
             "editor/title": [
                 {
                     "when": "resourceLangId == hdl && config.nand2tetris.showRunIconInEditorTitleMenu",
+                    "command": "nand2tetris.run",
+                    "group": "navigation"
+                },
+                {
+                    "when": "resourceLangId == asm && config.nand2tetris.showRunIconInEditorTitleMenu",
                     "command": "nand2tetris.run",
                     "group": "navigation"
                 }
@@ -92,6 +97,16 @@
                 ],
                 "extensions": [
                     ".hdl"
+                ],
+                "configuration": "./language-configuration.json"
+            },
+            {
+                "id": "asm",
+                "aliases": [
+                    "ASM"
+                ],
+                "extensions": [
+                    ".asm"
                 ],
                 "configuration": "./language-configuration.json"
             }
