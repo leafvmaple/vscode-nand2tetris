@@ -2,3 +2,6 @@
 .vscode-test/**
 .gitignore
 vsc-extension-quickstart.md
+Hardware Simulator.dat
+CPU Emulator.dat
+Assembler.dat

@@ -2,7 +2,7 @@
     "name": "nand2tetris",
     "displayName": "Nand2Tetris Tools",
     "description": "A Tool Set for the Open Course Nand2Tetris.",
-    "version": "0.3.0",
+    "version": "0.3.1",
     "icon": "images/icon.png",
     "publisher": "leafvmaple",
     "engines": {
@@ -21,6 +21,7 @@
         "onCommand:nand2tetris.run",
         "onCommand:nand2tetris.hardware",
         "onCommand:nand2tetris.assembler",
+        "onCommand:nand2tetris.cpu",
         "onCommand:nand2tetris.stop"
     ],
     "main": "./out/extension",
@@ -38,6 +39,10 @@
             {
                 "command": "nand2tetris.assembler",
                 "title": "Nand2Tetris: Open Assembler Simulator"
+            },
+            {
+                "command": "nand2tetris.cpu",
+                "title": "Nand2Tetris: Open CPU Simulator"
             },
             {
                 "command": "nand2tetris.stop",

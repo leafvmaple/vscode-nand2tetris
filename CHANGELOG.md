@@ -1,5 +1,9 @@
 # Nand2Tetris Change Log
 
+## [0.3.1] 2019-07-02
+
+* Add `CPU Simulator` Command.
+
 ## [0.3.0] 2019-07-01
 
 * Support `Run Code` for `ASM` File.

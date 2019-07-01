@@ -34,11 +34,19 @@ Install it from [VS Code Marketplace](https://marketplace.visualstudio.com/items
 
     Open the Assembler Simulator.
 
+* **Nand2Tetris: Open CPU Simulator**
+
+    Open the CPU Simulator.
+
 * **Nand2Tetris: Stop Running**
 
     Stop Running Code.
 
 ## Release Notes
+
+### Version 0.3.1
+
+* Add `CPU Simulator` Command.
 
 ### Version 0.3.0
 

@@ -17,6 +17,10 @@ export function activate(context: vscode.ExtensionContext) {
         commands.executeAssemblerCommand();
     });
 
+    const cpu = vscode.commands.registerCommand("nand2tetris.cpu", (fileUri: vscode.Uri) => {
+        commands.executeCPUCommand();
+    });
+
     const stop = vscode.commands.registerCommand("nand2tetris.stop", () => {
         commands.stopCommand();
     });
