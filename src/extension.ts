@@ -25,9 +25,9 @@ export function activate(context: vscode.ExtensionContext) {
         commands.stopCommand();
     });
 
-    /*const zip = vscode.commands.registerCommand("nand2tetris.zip", () => {
+    const zip = vscode.commands.registerCommand("nand2tetris.zip", () => {
         commands.zipCommand();
-    });*/
+    });
 
     context.subscriptions.push(run);
     context.subscriptions.push(commands);

@@ -10,6 +10,8 @@ The Visual Studio Code extenstion for Nand2Tetris Language support.
 
 3. **Auto load the `.tst` script to check your `.asm` program**
 
+4. **Quckly `compress` the course source to a `zip` that can easily commit**
+
 ## Installation
 
 Install it from [VS Code Marketplace](https://marketplace.visualstudio.com/items/leafvmaple.nand2tetris)
@@ -42,7 +44,15 @@ Install it from [VS Code Marketplace](https://marketplace.visualstudio.com/items
 
     Stop Running Code.
 
+* **Nand2Tetris: Compress course source to a zip**
+
+    Quckly Compress the course source.
+
 ## Release Notes
+
+### Version 0.4.0
+
+* Support `Compress` the Course Source to a `zip`.
 
 ### Version 0.3.1
 

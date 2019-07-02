@@ -1,17 +1,18 @@
 "use strict";
-import { basename, join, parse } from "path";
+import { resolve, join, parse } from "path";
 import * as vscode from "vscode";
 
 export class Commands implements vscode.Disposable {
     private EXTENSION_NAME = "leafvmaple.nand2tetris";
-    private LANGUAGE_NAME  = "Nand2Teteris";
-    private PROJECT_DIR = ["01", "02", "03"];
+    private LANGUAGE_NAME  = "Nand2Tetris";
+    private PROJECT_DIR = ["01", "02", "03", "04"];
     private outputChannel: vscode.OutputChannel;
     private terminal: vscode.Terminal;
     private config: vscode.WorkspaceConfiguration;
     private document: vscode.TextDocument;
     private platform: string;
     private extensionPath: string;
+    private zipCmd: string;
     private assemblerCmd: string;
     private CPUCmd: string;
     private hardwareCmd: string;
@@ -40,6 +41,7 @@ export class Commands implements vscode.Disposable {
 
         this.extensionPath = vscode.extensions.getExtension(this.EXTENSION_NAME).extensionPath;
         this.extensionPath = this.extensionPath.replace("\\", "/");
+        this.zipCmd = `java -jar ${this.extensionPath}/bin/lib/Zip.jar -f false -r \".+(?=HDL|hdl|asm|ASM)\"`;
         this.hardwareCmd = "java -classpath \"${CLASSPATH}" + symbol
                         + this.extensionPath + symbol
                         + this.extensionPath + "/bin/classes" + symbol
@@ -128,6 +130,57 @@ export class Commands implements vscode.Disposable {
         }
     }
 
+    public async zipCommand() {
+        if (this.isCompressing) {
+            vscode.window.showInformationMessage("Already Compressing!");
+            return;
+        }
+
+        let inputName;
+        let outputName;
+        /*const promptOptions = {
+            prompt: 'WakaTime Api Key',
+            placeHolder: "Enter your folder name that want to compress.",
+            value: "1",
+            ignoreFocusOut: true,
+            validateInput: function(text){return text;}
+        };
+
+        vscode.window.showInputBox(promptOptions).then(val => {
+            projectName = val;
+        });*/
+
+        this.document = vscode.window.activeTextEditor.document;
+        let filePath = parse(this.document.fileName).dir;
+        const dirArr = filePath.split("\\").filter(_ => _).reverse();
+
+        if (this.PROJECT_DIR.find(s => s === dirArr[0])) {
+            const baseName = parseInt(dirArr[0], 10).toString();
+            filePath = resolve(parse(this.document.fileName).dir, "..");
+
+            outputName = `${filePath}\\project${baseName}.zip`;
+            inputName = `${filePath}\\${dirArr[0]}`;
+        } else if (this.PROJECT_DIR.find(s => s === dirArr[1])) {
+            const baseName = parseInt(dirArr[1], 10).toString();
+            filePath = resolve(filePath, "..\\..");
+
+            outputName = `${filePath}\\project${baseName}.zip`;
+            inputName = `${filePath}\\${dirArr[1]}`;
+        }
+        const command = `${this.zipCmd} -o ${outputName} -i ${inputName}`;
+
+        this.config = vscode.workspace.getConfiguration("nand2tetris");
+
+        const runInTerminal = this.config.get<boolean>("runInTerminal");
+        const clearPreviousOutput = this.config.get<boolean>("clearPreviousOutput");
+        const preserveFocus = this.config.get<boolean>("preserveFocus");
+        if (runInTerminal) {
+            this.zipCommandInTerminal(command, clearPreviousOutput, preserveFocus);
+        } else {
+            this.zipCommandInOutputChannel(command, outputName, clearPreviousOutput, preserveFocus);
+        }
+    }
+
     public dispose() {
         this.stopCommand();
     }
@@ -160,7 +213,6 @@ export class Commands implements vscode.Disposable {
             if (data.match("successfully")) {
                 this.isSuccess = true;
             }
-            //this.outputChannel.appendLine(data);
         });
 
         this.process.stderr.on("data", (data) => {
@@ -180,118 +232,45 @@ export class Commands implements vscode.Disposable {
         });
     }
 
-    /*public async zipCommand() {
-        if (this.isCompressing) {
-            vscode.window.showInformationMessage("Already Compressing!");
-            return;
-        }
-
-        const promptOptions = {
-            prompt: 'WakaTime Api Key',
-            placeHolder: "Enter your folder name that want to compress.",
-            value: "1",
-            ignoreFocusOut: true,
-            validateInput: function(text){return text;}
-        };
-
-        let projectName;
-        //vscode.window.showInputBox(promptOptions).then(val => {
-        //    projectName = val;
-        //});
-
-        this.document = vscode.window.activeTextEditor.document;
-        const filePath = parse(this.document.fileName).dir;
-        const dirArr = filePath.split('\\').filter(_=> _).reverse();
-
-        if (this.PROJECT_DIR.find(s => s === dirArr[0])) {
-            projectName = dirArr[0];
-        } else if ((dirArr[0] === "a" || dirArr[0] === "b") && this.PROJECT_DIR.find(s => s === dirArr[1])) {
-            projectName = dirArr[1];
-        }
-
-        this.config = vscode.workspace.getConfiguration("nand2tetris");
-
-        const runInTerminal = this.config.get<boolean>("runInTerminal");
-        const clearPreviousOutput = this.config.get<boolean>("clearPreviousOutput");
-        const preserveFocus = this.config.get<boolean>("preserveFocus");
-        if (runInTerminal) {
-            this.zipCommandInTerminal(filePath, projectName, clearPreviousOutput, preserveFocus);
-        } else {
-            this.zipCommandInOutputChannel(filePath, projectName, clearPreviousOutput, preserveFocus);
-        }
-    }
-
-    public zipCommandInTerminal(filePath: string, projectName: string, clearPreviousOutput, preserveFocus): void {
+    private zipCommandInTerminal(command: string, clearPreviousOutput, preserveFocus): void {
         if (clearPreviousOutput) {
             vscode.commands.executeCommand("workbench.action.terminal.clear");
         }
-
         this.terminal.show(preserveFocus);
-
-        const fs = require("fs");
-        const archiver = require("archiver");
-        const output = fs.createWriteStream(`${filePath}\\${projectName}.zip`);
-        const archive = archiver("zip", {
-            zlib: { level: 9 }
-        });
-
-        output.on("close", function() {
-            this.terminal.sendText(archive.pointer() + ' total bytes');
-            this.terminal.sendText("archiver has been finalized and the output file descriptor has closed.");
-        });
-
-        output.on("end", function() {
-            this.terminal.sendText('Data has been drained');
-        });
-
-        archive.on("end", function(){
-            this.terminal.sendText(`[Done] Compression finish.`);
-        });
-
-        archive.on("error", function(err){
-            throw err;
-        });
-
-        archive.pipe(output);
-        archive.directory(`${filePath}`, false);
-        archive.finalize();
+        this.terminal.sendText(`cd "${this.extensionPath}"`);
+        this.terminal.sendText(command);
     }
 
-    public zipCommandInOutputChannel(filePath: string, projectName: string, clearPreviousOutput, preserveFocus): void {
+    private zipCommandInOutputChannel(command: string, outputName: string, clearPreviousOutput, preserveFocus): void {
         if (clearPreviousOutput) {
             this.outputChannel.clear();
         }
         this.isRunning = true;
         this.isSuccess = false;
         this.outputChannel.show(preserveFocus);
-        this.outputChannel.appendLine(`[Compressing] ${filePath}`);
+        this.outputChannel.appendLine(`[Compressing] ${outputName}`);
+        const exec = require("child_process").exec;
+        const startTime = new Date();
+        this.process = exec(command, { cwd: this.extensionPath });
 
-        const fs = require("fs");
-        const archiver = require("archiver");
-        const output = fs.createWriteStream(`${filePath}\\${projectName}.zip`);
-        const archive = archiver("zip", {
-            zlib: { level: 9 }
+        this.process.stdout.on("data", (data) => {
+            this.outputChannel.appendLine(data);
         });
 
-        output.on("close", function() {
-            this.outputChannel.appendLine(archive.pointer() + ' total bytes');
-            this.outputChannel.appendLine("archiver has been finalized and the output file descriptor has closed.");
+        this.process.stderr.on("data", (data) => {
+            if (data.match("java")) {
+                data = "You need to install [Java Runtime Environment] First.";
+            }
+            this.outputChannel.appendLine(data);
         });
 
-        output.on("end", function() {
-            this.outputChannel.appendLine('Data has been drained');
+        this.process.on("close", (code) => {
+            this.isRunning = false;
+            const endTime = new Date();
+            const elapsedTime = (endTime.getTime() - startTime.getTime()) / 1000;
+            this.outputChannel.appendLine(`[Done] End Compress with code=${code} in ${elapsedTime} seconds`);
+            this.outputChannel.appendLine(`[Done] Compress to file ${outputName}`);
+            this.outputChannel.appendLine("");
         });
-
-        archive.on("end", function(){
-            this.outputChannel.appendLine(`[Done] Compression finish.`);
-        });
-
-        archive.on("error", function(err){
-            throw err;
-        });
-
-        archive.pipe(output);
-        archive.directory(`${filePath}`, false);
-        archive.finalize();
-    }*/
+    }
 }

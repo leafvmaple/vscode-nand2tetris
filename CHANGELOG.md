@@ -1,5 +1,9 @@
 # Nand2Tetris Change Log
 
+## [0.4.0] 2019-07-02
+
+* Support `Compress` the Course Source to a `zip`.
+
 ## [0.3.1] 2019-07-02
 
 * Add `CPU Simulator` Command.
