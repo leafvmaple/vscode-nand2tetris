@@ -50,6 +50,10 @@ Install it from [VS Code Marketplace](https://marketplace.visualstudio.com/items
 
 ## Release Notes
 
+### Version 1.0.0
+
+* Fixed the bug when `Compress` in WIN
+
 ### Version 0.4.0
 
 * Support `Compress` the Course Source to a `zip`.

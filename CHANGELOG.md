@@ -1,5 +1,9 @@
 # Nand2Tetris Change Log
 
+## [1.0.0] 2019-07-08
+
+* Fixed the bug when `Compress` in WIN
+
 ## [0.4.0] 2019-07-02
 
 * Support `Compress` the Course Source to a `zip`.
