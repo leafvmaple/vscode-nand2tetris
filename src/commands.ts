@@ -40,7 +40,7 @@ export class Commands implements vscode.Disposable {
         this.terminal = vscode.window.createTerminal(this.LANGUAGE_NAME);
 
         this.extensionPath = vscode.extensions.getExtension(this.EXTENSION_NAME).extensionPath;
-        this.extensionPath = this.extensionPath.replace("\\", "/");
+        this.extensionPath = this.extensionPath.replace(/ /g, "\" \"").replace(/\\/g, "/");
         this.zipCmd = `java -jar ${this.extensionPath}/bin/lib/Zip.jar -f false -r \".+(?=HDL|hdl|asm|ASM)\"`;
         this.hardwareCmd = "java -classpath \"${CLASSPATH}" + symbol
                         + this.extensionPath + symbol
@@ -151,27 +151,28 @@ export class Commands implements vscode.Disposable {
         });*/
 
         this.document = vscode.window.activeTextEditor.document;
-        let filePath = parse(this.document.fileName).dir;
-        const dirArr = filePath.split("\\").filter(_ => _).reverse();
+        let filePath = parse(this.document.fileName).dir.replace(/ /g, "\" \"").replace(/\\/g, "/");
+        const dirArr = filePath.split("/").filter(_ => _).reverse();
 
         if (this.PROJECT_DIR.find(s => s === dirArr[0])) {
             const baseName = parseInt(dirArr[0], 10).toString();
-            filePath = resolve(parse(this.document.fileName).dir, "..");
+            filePath = resolve(filePath, "..");
 
-            outputName = `${filePath}\\project${baseName}.zip`;
-            inputName = `${filePath}\\${dirArr[0]}`;
+            outputName = `${filePath}/project${baseName}.zip`;
+            inputName = `${filePath}/${dirArr[0]}`;
         } else if (this.PROJECT_DIR.find(s => s === dirArr[1])) {
             const baseName = parseInt(dirArr[1], 10).toString();
-            filePath = resolve(filePath, "..\\..");
+            filePath = resolve(filePath, "../..");
 
-            outputName = `${filePath}\\project${baseName}.zip`;
-            inputName = `${filePath}\\${dirArr[1]}`;
+            outputName = `${filePath}/project${baseName}.zip`;
+            inputName = `${filePath}/${dirArr[1]}`;
         }
         if (inputName == null) {
             vscode.window.showInformationMessage("Could not found source to compress!");
             return;
         }
-        const command = `${this.zipCmd} -o ${outputName} -i ${inputName}`;
+        let command = `${this.zipCmd} -o ${outputName} -i ${inputName}`;
+        command = command.replace(/\\/g, "/");
 
         this.config = vscode.workspace.getConfiguration("nand2tetris");
 
