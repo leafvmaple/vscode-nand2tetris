@@ -167,6 +167,10 @@ export class Commands implements vscode.Disposable {
             outputName = `${filePath}\\project${baseName}.zip`;
             inputName = `${filePath}\\${dirArr[1]}`;
         }
+        if (inputName == null) {
+            vscode.window.showInformationMessage("Could not found source to compress!");
+            return;
+        }
         const command = `${this.zipCmd} -o ${outputName} -i ${inputName}`;
 
         this.config = vscode.workspace.getConfiguration("nand2tetris");
