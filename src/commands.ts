@@ -5,7 +5,7 @@ import * as vscode from "vscode";
 export class Commands implements vscode.Disposable {
     private EXTENSION_NAME = "leafvmaple.nand2tetris";
     private LANGUAGE_NAME  = "Nand2Tetris";
-    private PROJECT_DIR = ["01", "02", "03", "04"];
+    private PROJECT_DIR = ["01", "02", "03", "04", "05", "06", "07", "08", "09", "10", "11", "12"];
     private outputChannel: vscode.OutputChannel;
     private terminal: vscode.Terminal;
     private config: vscode.WorkspaceConfiguration;
