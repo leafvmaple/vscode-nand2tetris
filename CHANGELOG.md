@@ -1,5 +1,9 @@
 # Nand2Tetris Change Log
 
+## [1.1.0] 2019-07-10
+
+* Auto add necessary files like `prog.txt` into `zip` when compress the source
+
 ## [1.0.0] 2019-07-08
 
 * Fixed the bug when `Compress` in WIN

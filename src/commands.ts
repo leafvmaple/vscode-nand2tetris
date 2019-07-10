@@ -1,18 +1,18 @@
 "use strict";
 import { resolve, join, parse } from "path";
 import * as vscode from "vscode";
+import * as fs from "fs";
 
 export class Commands implements vscode.Disposable {
     private EXTENSION_NAME = "leafvmaple.nand2tetris";
     private LANGUAGE_NAME  = "Nand2Tetris";
-    private PROJECT_DIR = ["01", "02", "03", "04", "05", "06", "07", "08", "09", "10", "11", "12"];
+    private zipSource: JSON;
     private outputChannel: vscode.OutputChannel;
     private terminal: vscode.Terminal;
     private config: vscode.WorkspaceConfiguration;
     private document: vscode.TextDocument;
     private platform: string;
     private extensionPath: string;
-    private zipCmd: string;
     private assemblerCmd: string;
     private CPUCmd: string;
     private hardwareCmd: string;
@@ -41,7 +41,6 @@ export class Commands implements vscode.Disposable {
 
         this.extensionPath = vscode.extensions.getExtension(this.EXTENSION_NAME).extensionPath;
         this.extensionPath = this.extensionPath.replace(/ /g, "\" \"").replace(/\\/g, "/");
-        this.zipCmd = `java -jar ${this.extensionPath}/bin/lib/Zip.jar -f false -r \".+(?=HDL|hdl|asm|ASM)\"`;
         this.hardwareCmd = "java -classpath \"${CLASSPATH}" + symbol
                         + this.extensionPath + symbol
                         + this.extensionPath + "/bin/classes" + symbol
@@ -68,6 +67,8 @@ export class Commands implements vscode.Disposable {
                     + this.extensionPath + "/bin/lib/Simulators.jar" + symbol
                     + this.extensionPath + "/bin/lib/SimulatorsGUI.jar" + symbol
                     + this.extensionPath + "/bin/lib/Compilers.jar\" CPUEmulatorMain ";
+
+        this.zipSource = JSON.parse(fs.readFileSync(this.extensionPath + "/assets/zip.json").toString());
     }
 
     public async executeCommand(fileUri: vscode.Uri) {
@@ -138,6 +139,7 @@ export class Commands implements vscode.Disposable {
 
         let inputName;
         let outputName;
+        let zipCmd;
         /*const promptOptions = {
             prompt: 'WakaTime Api Key',
             placeHolder: "Enter your folder name that want to compress.",
@@ -154,13 +156,38 @@ export class Commands implements vscode.Disposable {
         let filePath = parse(this.document.fileName).dir.replace(/ /g, "\" \"").replace(/\\/g, "/");
         const dirArr = filePath.split("/").filter(_ => _).reverse();
 
-        if (this.PROJECT_DIR.find(s => s === dirArr[0])) {
+        if (this.zipSource[dirArr[0]]) {
+            const courseInfo = this.zipSource[dirArr[0]];
+            const extension = courseInfo.extension.join("|");
+            zipCmd = `java -jar ${this.extensionPath}/bin/lib/Zip.jar -f false -r \".+(?=${extension})\"`;
+            if (courseInfo.extrafile) {
+                const extraFiles = [];
+                for (const extraFile of courseInfo.extrafile) {
+                    extraFiles.push(this.extensionPath + "/assets/" + extraFile);
+                }
+                const extratring = extraFiles.join("|");
+                zipCmd = zipCmd + " -a " + extratring;
+            }
+
             const baseName = parseInt(dirArr[0], 10).toString();
             filePath = resolve(filePath, "..");
 
             outputName = `${filePath}/project${baseName}.zip`;
             inputName = `${filePath}/${dirArr[0]}`;
-        } else if (this.PROJECT_DIR.find(s => s === dirArr[1])) {
+
+        } else if (this.zipSource[dirArr[1]]) {
+            const courseInfo = this.zipSource[dirArr[1]];
+            const extension = courseInfo.extension.join("|");
+            zipCmd = `java -jar ${this.extensionPath}/bin/lib/Zip.jar -f false -r \".+(?=${extension})\"`;
+            if (courseInfo.extrafile) {
+                const extraFiles = [];
+                for (const extraFile of courseInfo.extrafile) {
+                    extraFiles.push(this.extensionPath + "/assets/" + extraFile);
+                }
+                const extratring = extraFiles.join("|");
+                zipCmd = zipCmd + " -a " + extratring;
+            }
+
             const baseName = parseInt(dirArr[1], 10).toString();
             filePath = resolve(filePath, "../..");
 
@@ -171,7 +198,7 @@ export class Commands implements vscode.Disposable {
             vscode.window.showInformationMessage("Could not found source to compress!");
             return;
         }
-        let command = `${this.zipCmd} -o ${outputName} -i ${inputName}`;
+        let command = `${zipCmd} -o ${outputName} -i ${inputName}`;
         command = command.replace(/\\/g, "/");
 
         this.config = vscode.workspace.getConfiguration("nand2tetris");

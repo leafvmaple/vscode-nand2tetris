@@ -1,0 +1,40 @@
+{
+    "01": {
+        "extension": [
+            ".hdl"
+        ]
+    },
+    "02": {
+        "extension": [
+            "hdl",
+            "HDL"
+        ]
+    },
+    "03": {
+        "extension": [
+            "hdl",
+            "HDL"
+        ]
+    },
+    "04": {
+        "extension": [
+            "asm",
+            "ASM"
+        ]
+    },
+    "05": {
+        "extension": [
+            "hdl",
+            "HDL"
+        ]
+    },
+    "06": {
+        "extension": [
+            "hack",
+            "HACK"
+        ],
+        "extrafile": [
+            "prog.txt"
+        ]
+    }
+}

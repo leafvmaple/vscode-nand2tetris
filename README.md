@@ -12,6 +12,8 @@ The Visual Studio Code extenstion for Nand2Tetris Language support.
 
 4. **Quckly `compress` the course source to a `zip` that can easily commit**
 
+5. **Auto add necessary files like `prog.txt` into `zip` when compress the source**
+
 ## Installation
 
 Install it from [VS Code Marketplace](https://marketplace.visualstudio.com/items/leafvmaple.nand2tetris)
@@ -49,6 +51,10 @@ Install it from [VS Code Marketplace](https://marketplace.visualstudio.com/items
     Quckly Compress the course source.
 
 ## Release Notes
+
+### Version 1.1.0
+
+* Auto add necessary files like `prog.txt` into `zip` when compress the source
 
 ### Version 1.0.0
 
