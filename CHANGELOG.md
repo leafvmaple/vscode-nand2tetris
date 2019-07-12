@@ -1,5 +1,9 @@
 # Nand2Tetris Change Log
 
+## [1.1.1] 2019-07-12
+
+* Support the parameter with bus
+
 ## [1.1.0] 2019-07-10
 
 * Auto add necessary files like `prog.txt` into `zip` when compress the source

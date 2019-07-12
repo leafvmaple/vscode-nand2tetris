@@ -52,6 +52,10 @@ Install it from [VS Code Marketplace](https://marketplace.visualstudio.com/items
 
 ## Release Notes
 
+### Version 1.1.1
+
+* Support the parameter with bus
+
 ### Version 1.1.0
 
 * Auto add necessary files like `prog.txt` into `zip` when compress the source

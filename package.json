@@ -2,7 +2,7 @@
     "name": "nand2tetris",
     "displayName": "Nand2Tetris Tools",
     "description": "A Tools Set for the Open Course Nand2Tetris.",
-    "version": "1.1.0",
+    "version": "1.1.1",
     "icon": "images/icon.png",
     "publisher": "leafvmaple",
     "engines": {

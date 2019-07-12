@@ -63,9 +63,12 @@
             "captures": {
                 "1": {
                     "name": "variable.parameter.hdl"
+                },
+                "2": {
+                    "name": "constant.numeric.hdl"
                 }
             },
-            "match": "([\\w\\d\\_]+)\\s*="
+            "match": "([\\w\\d\\_]+)\\s*(\\[.+\\])*="
         }
     ],
     "scopeName": "source.hdl"
