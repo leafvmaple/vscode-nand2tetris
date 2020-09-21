@@ -57,6 +57,13 @@
         ], 
         "description": "* 1-bit register:\n* If load[t] == 1 then out[t+1] = in[t]\n* else out does not change (out[t+1] = out[t])\n", 
         "prefix": "Bit"
+    },
+    "Chip CPU": {
+        "body": [
+            "CPU(inM=$1, instruction=$2, reset=$3 ,outM=$4, writeM=$5 ,addressM=$6, pc=$7);"
+        ], 
+        "description": "* Hack CPU\n*", 
+        "prefix": "CPU"
     }, 
     "Chip DFF": {
         "body": [
@@ -120,6 +127,13 @@
         ], 
         "description": "* The keyboard (memory map).\n* Outputs the code of the currently pressed key\n", 
         "prefix": "Keyboard"
+    },
+    "Chip Memory": {
+        "body": [
+            "Memory(in=$1, load=$2, address=$3, out=$4);"
+        ], 
+        "description": "* Data memory of the Hack platform (RAM)\n", 
+        "prefix": "Memory"
     }, 
     "Chip Mux": {
         "body": [
