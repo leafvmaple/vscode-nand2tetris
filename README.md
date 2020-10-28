@@ -10,7 +10,7 @@ The Visual Studio Code extenstion for Nand2Tetris Language support.
 
 3. **Auto load the `.tst` script to check your `.asm` program**
 
-4. **Quckly `compress` the course source to a `zip` that can easily commit**
+4. **Quickly `compress` the course source to a `zip` that can easily commit**
 
 5. **Auto add necessary files like `prog.txt` into `zip` when compress the source**
 
