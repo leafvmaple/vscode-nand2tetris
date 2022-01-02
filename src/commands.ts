@@ -88,7 +88,7 @@ export class Commands implements vscode.Disposable {
 
         const filePath = parse(this.document.fileName);
         const fileName = filePath.name + filePath.ext;
-        const execName = join(filePath.dir, filePath.name).replace(/ /g, "\" \"").replace(/\\/g, "/");
+        const execName = join(filePath.dir, filePath.name).replace(/\\/g, "/");
         let command: string;
         if (filePath.ext === ".hdl") {
             command = this.hardwareCmd + execName + ".tst";
