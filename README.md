@@ -1,6 +1,6 @@
 # Nand2Tetris Language README
 
-The Visual Studio Code extenstion for Nand2Tetris Language support.
+The Visual Studio Code extension for Nand2Tetris Language support.
 
 ## Features
 
